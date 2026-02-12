@@ -1,8 +1,10 @@
 ﻿import React, { useState } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const Footer: React.FC = () => {
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;
   const contactEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT as string | undefined;
+  const ref = useScrollReveal();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -70,101 +72,385 @@ const Footer: React.FC = () => {
       window.location.href = `mailto:contacto@asesoriasbecer.cl?subject=${encodeURIComponent('Nueva solicitud desde la web')}&body=${encodeURIComponent(messageText)}`;
       setStatus('success');
       setStatusMessage('Abrimos tu correo para completar el envío.');
-    } catch (error) {
+    } catch {
       setStatus('error');
       setStatusMessage('Ocurrió un problema al enviar. Intenta nuevamente o escríbenos por WhatsApp.');
     }
   };
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    padding: '14px 18px',
+    borderRadius: '14px',
+    border: '1.5px solid rgba(15,23,42,0.1)',
+    background: '#f8fafc',
+    color: 'var(--text-primary)',
+    fontSize: '0.95rem',
+    fontFamily: 'inherit',
+    transition: 'all 0.3s ease',
+    outline: 'none',
+  };
+
   return (
-    <footer id="contacto" className="bg-primary dark:bg-slate-900 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div className="space-y-8">
-            <div className="flex items-center">
-              <img src="/logo-blanco.png" alt="Logo Asesorías Becer" className="h-24 w-24 object-contain" />
+    <footer
+      id="contacto"
+      ref={ref}
+      style={{
+        background: 'linear-gradient(135deg, var(--primary) 0%, #0A1F29 60%, #122838 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Decorative mesh */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(circle at 80% 20%, rgba(0,212,170,0.08) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(108,92,231,0.06) 0%, transparent 50%)',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.03,
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" style={{ paddingTop: '80px', paddingBottom: '48px' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
+          {/* Left column – Info */}
+          <div className="animate-on-scroll">
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
+              <img
+                src="/logo-blanco.png"
+                alt="Logo Asesorías Becer"
+                style={{ height: '56px', width: 'auto', objectFit: 'contain' }}
+              />
             </div>
-            <p className="text-lg text-slate-300 max-w-md leading-relaxed">
-              Impulsando el crecimiento digital de la Región de Atacama con cobertura en todo Chile remoto.
+
+            <p
+              style={{
+                fontSize: '1rem',
+                lineHeight: 1.6,
+                color: 'rgba(255,255,255,0.7)',
+                maxWidth: '420px',
+                marginBottom: '32px',
+              }}
+            >
+              Impulsando el crecimiento digital de la Región de Atacama con cobertura remota en todo Chile.
             </p>
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <span className="material-icons text-slate-400 mt-1 mr-3">location_on</span>
-                <span className="text-slate-300">Atención remota para todo Chile.</span>
-              </div>
-              <div className="flex items-center">
-                <span className="material-icons text-slate-400 mr-3">email</span>
-                <a href="mailto:contacto@asesoriasbecer.cl" className="text-slate-300 hover:text-white transition-colors">contacto@asesoriasbecer.cl</a>
-              </div>
-              <div className="flex items-center">
-                <span className="material-icons text-slate-400 mr-3">phone</span>
-                <a href="tel:+56912345678" className="text-slate-300 hover:text-white transition-colors">+56 9 1234 5678</a>
-              </div>
+
+            {/* Contact info cards */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '40px' }}>
+              {[
+                { icon: 'location_on', text: 'Atención remota para todo Chile', href: '' },
+                { icon: 'email', text: 'contacto@asesoriasbecer.cl', href: 'mailto:contacto@asesoriasbecer.cl' },
+                { icon: 'phone', text: '+56 9 1234 5678', href: 'tel:+56912345678' },
+              ].map((contact) => (
+                <div
+                  key={contact.icon}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '14px',
+                    padding: '14px 18px',
+                    borderRadius: '16px',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    transition: 'all 0.3s ease',
+                    cursor: contact.href ? 'pointer' : 'default',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)';
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,212,170,0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)';
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)';
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '12px',
+                      background: 'rgba(0,212,170,0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span className="material-icons" style={{ color: 'var(--accent)', fontSize: '20px' }}>
+                      {contact.icon}
+                    </span>
+                  </div>
+                  {contact.href ? (
+                    <a
+                      href={contact.href}
+                      style={{
+                        color: 'rgba(255,255,255,0.8)',
+                        textDecoration: 'none',
+                        fontSize: '0.95rem',
+                        fontWeight: 500,
+                        transition: 'color 0.2s',
+                      }}
+                    >
+                      {contact.text}
+                    </a>
+                  ) : (
+                    <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', fontWeight: 500 }}>
+                      {contact.text}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Trust */}
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '12px',
+              }}
+            >
+              {['2+ años de experiencia', 'Todo Chile remoto', 'Diagnóstico gratis'].map((text) => (
+                <span
+                  key={text}
+                  style={{
+                    padding: '6px 14px',
+                    borderRadius: '100px',
+                    background: 'rgba(0,212,170,0.08)',
+                    border: '1px solid rgba(0,212,170,0.15)',
+                    color: 'var(--accent)',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  {text}
+                </span>
+              ))}
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute -inset-4 bg-primary-dark/50 rounded-2xl opacity-50 blur-xl"></div>
-            <div className="relative bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700">
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Agenda tu diagnóstico</h3>
-              <form className="space-y-5" onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Tu nombre"
-                    className="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm p-2 border"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Teléfono</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+56 9 ..."
-                    className="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm p-2 border"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Mensaje (Opcional)</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full rounded-lg border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark text-slate-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm p-2 border"
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {status === 'sending' ? 'Enviando...' : 'Solicitar llamada gratis'}
-                </button>
+          {/* Right column – Form */}
+          <div className="animate-on-scroll delay-200">
+            <div
+              style={{
+                position: 'relative',
+              }}
+            >
+              {/* Glow effect behind form */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: '-8px',
+                  background: 'linear-gradient(135deg, rgba(0,212,170,0.15), rgba(108,92,231,0.1))',
+                  borderRadius: '32px',
+                  filter: 'blur(24px)',
+                  opacity: 0.6,
+                }}
+              />
 
-                {statusMessage && (
-                  <p className={`text-sm ${status === 'error' ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
-                    {statusMessage}
-                  </p>
-                )}
-              </form>
+              <div
+                style={{
+                  position: 'relative',
+                  background: '#ffffff',
+                  borderRadius: '28px',
+                  padding: '40px 36px',
+                  boxShadow: '0 24px 64px rgba(0,0,0,0.15)',
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 800,
+                    color: 'var(--text-primary)',
+                    marginBottom: '8px',
+                    letterSpacing: '-0.02em',
+                  }}
+                >
+                  Agenda tu diagnóstico
+                </h3>
+                <p
+                  style={{
+                    fontSize: '0.9rem',
+                    color: 'var(--text-secondary)',
+                    marginBottom: '28px',
+                    lineHeight: 1.5,
+                  }}
+                >
+                  45–60 minutos gratis para analizar tu presencia digital.
+                </p>
+
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <label
+                      htmlFor="footer-name"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        marginBottom: '6px',
+                      }}
+                    >
+                      Nombre
+                    </label>
+                    <input
+                      type="text"
+                      id="footer-name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Tu nombre"
+                      required
+                      style={inputStyle}
+                      onFocus={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
+                        (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
+                      }}
+                      onBlur={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
+                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="footer-phone"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        marginBottom: '6px',
+                      }}
+                    >
+                      Teléfono
+                    </label>
+                    <input
+                      type="tel"
+                      id="footer-phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+56 9 ..."
+                      required
+                      style={inputStyle}
+                      onFocus={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
+                        (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
+                      }}
+                      onBlur={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
+                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="footer-message"
+                      style={{
+                        display: 'block',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        marginBottom: '6px',
+                      }}
+                    >
+                      Mensaje <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(opcional)</span>
+                    </label>
+                    <textarea
+                      id="footer-message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={3}
+                      style={{
+                        ...inputStyle,
+                        resize: 'vertical' as const,
+                        minHeight: '80px',
+                      }}
+                      onFocus={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
+                        (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
+                      }}
+                      onBlur={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
+                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="btn-accent"
+                    style={{
+                      width: '100%',
+                      padding: '16px',
+                      marginTop: '4px',
+                      border: 'none',
+                      cursor: status === 'sending' ? 'not-allowed' : 'pointer',
+                      opacity: status === 'sending' ? 0.7 : 1,
+                    }}
+                  >
+                    {status === 'sending' ? (
+                      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <span className="material-icons" style={{ fontSize: 18, animation: 'orbit 1s linear infinite' }}>sync</span>
+                        Enviando...
+                      </span>
+                    ) : (
+                      'Solicitar llamada gratis'
+                    )}
+                  </button>
+
+                  {statusMessage && (
+                    <div
+                      style={{
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        background: status === 'error' ? 'rgba(239,68,68,0.06)' : 'rgba(0,212,170,0.06)',
+                        border: `1px solid ${status === 'error' ? 'rgba(239,68,68,0.15)' : 'rgba(0,212,170,0.15)'}`,
+                        fontSize: '0.85rem',
+                        fontWeight: 500,
+                        color: status === 'error' ? '#DC2626' : '#059669',
+                      }}
+                    >
+                      {statusMessage}
+                    </div>
+                  )}
+                </form>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-slate-700/50 text-center">
-          <p className="text-slate-400 text-sm">© 2026 Asesorías Becer. Todos los derechos reservados.</p>
+        {/* Bottom bar */}
+        <div
+          style={{
+            marginTop: '64px',
+            paddingTop: '24px',
+            borderTop: '1px solid rgba(255,255,255,0.08)',
+            textAlign: 'center',
+          }}
+        >
+          <p
+            style={{
+              color: 'rgba(255,255,255,0.35)',
+              fontSize: '0.85rem',
+              fontWeight: 500,
+            }}
+          >
+            © 2026 Asesorías Becer. Todos los derechos reservados.
+          </p>
         </div>
       </div>
     </footer>

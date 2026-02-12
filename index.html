@@ -1,63 +1,50 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/logo-color.png" />
-    <title>Asesorías Becer - Marketing Digital en Atacama</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#0F2D3A",
-              "primary-dark": "#0A1F29",
-              "background-light": "#f6f6f8",
-              "background-dark": "#111621",
-              whatsapp: "#25D366",
-              "whatsapp-hover": "#128C7E",
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-            },
-            animation: {
-              blob: "blob 7s infinite",
-            },
-            keyframes: {
-              blob: {
-                "0%": {
-                  transform: "translate(0px, 0px) scale(1)",
-                },
-                "33%": {
-                  transform: "translate(30px, -50px) scale(1.1)",
-                },
-                "66%": {
-                  transform: "translate(-20px, 20px) scale(0.9)",
-                },
-                "100%": {
-                  transform: "translate(0px, 0px) scale(1)",
-                },
-              },
-            },
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/logo-color.png" />
+  <title>Asesorías Becer - Marketing Digital en Atacama</title>
+  <meta name="description"
+    content="Digitaliza tu pyme y aparece donde te buscan. Asesorías de marketing digital, desarrollo web, SEO local y Google Ads para pymes en Atacama y todo Chile." />
+  <meta name="keywords"
+    content="marketing digital, Atacama, pyme, SEO local, Google Ads, desarrollo web, asesoría digital" />
+  <meta property="og:title" content="Asesorías Becer - Marketing Digital en Atacama" />
+  <meta property="og:description"
+    content="Primera asesoría gratuita. Creamos web, app o sistema de gestión con posicionamiento en Google para generar ventas reales." />
+  <meta property="og:type" content="website" />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0F2D3A",
+            "primary-dark": "#0A1F29",
+            "background-light": "#f6f6f8",
+            "background-dark": "#111621",
+            whatsapp: "#25D366",
+            "whatsapp-hover": "#128C7E",
+            accent: "#00D4AA",
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
           },
         },
-      };
-    </script>
-    <style>
-        .material-icons {
-            font-size: 24px;
-        }
-    </style>
+      },
+    };
+  </script>
+  <style>
+    .material-icons {
+      font-size: 24px;
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -66,11 +53,13 @@
     "react": "https://esm.sh/react@^19.2.4"
   }
 }
-</script>
-<link rel="stylesheet" href="/index.css">
+    </script>
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="font-display bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 antialiased selection:bg-primary/30">
-    <div id="root"></div>
+
+<body class="font-display bg-background-light text-slate-800 antialiased selection:bg-accent/20">
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>

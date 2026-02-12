@@ -1,78 +1,266 @@
-﻿import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const Hero: React.FC = () => {
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;
   const whatsappHref = whatsappNumber
     ? `https://wa.me/${whatsappNumber}?text=Hola,%20quiero%20digitalizar%20mi%20negocio.`
     : '#contacto';
+  const ref = useScrollReveal();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 100);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <section className="relative pt-20 pb-28 overflow-hidden">
-      <div className="absolute inset-0 z-0 opacity-40 dark:opacity-10 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-sky-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+    <section
+      ref={ref}
+      className="relative overflow-hidden"
+      style={{
+        paddingTop: '140px',
+        paddingBottom: '100px',
+        background: 'linear-gradient(180deg, #f6f6f8 0%, #ffffff 40%, #f0fdf9 100%)',
+      }}
+    >
+      {/* Mesh gradient blobs */}
+      <div className="absolute inset-0 pointer-events-none" style={{ overflow: 'hidden' }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: '-10%',
+            left: '-5%',
+            width: '600px',
+            height: '600px',
+            background: 'radial-gradient(circle, rgba(0,212,170,0.12) 0%, transparent 70%)',
+            animation: 'blob-morph 12s ease-in-out infinite',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: '20%',
+            right: '-10%',
+            width: '500px',
+            height: '500px',
+            background: 'radial-gradient(circle, rgba(108,92,231,0.08) 0%, transparent 70%)',
+            animation: 'blob-morph 15s ease-in-out infinite reverse',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '-20%',
+            left: '30%',
+            width: '700px',
+            height: '700px',
+            background: 'radial-gradient(circle, rgba(15,45,58,0.06) 0%, transparent 70%)',
+            animation: 'blob-morph 18s ease-in-out infinite',
+            animationDelay: '-5s',
+          }}
+        />
+        {/* Grid dots overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.03,
+            backgroundImage: 'radial-gradient(var(--primary) 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-100 dark:bg-primary/20 text-primary font-medium text-sm mb-8 border border-slate-200 dark:border-primary/30">
-          <span className="flex h-2 w-2 relative mr-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Badge */}
+        <div
+          className="animate-on-scroll"
+          style={{
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            transitionDelay: '200ms',
+          }}
+        >
+          <span className="section-badge" style={{ marginBottom: '28px' }}>
+            Atención remota 100% · Todo Chile
           </span>
-          Todo Chile remoto 100% para pymes en regiones
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight">
-          Digitaliza tu pyme y <br className="hidden md:block" />
-          <span className="text-primary">aparece donde te buscan</span>
+        {/* Heading */}
+        <h1
+          style={{
+            fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+            fontWeight: 800,
+            lineHeight: 1.08,
+            letterSpacing: '-0.04em',
+            color: 'var(--text-primary)',
+            marginBottom: '24px',
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
+            transitionDelay: '400ms',
+          }}
+        >
+          Digitaliza tu pyme y{' '}
+          <br className="hidden md:block" />
+          <span className="gradient-text">aparece donde te buscan</span>
         </h1>
 
-        <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-10">
-          Primera asesoría gratuita de 45-60 minutos para diagnóstico operativo y digital.
-          Creamos web, app o sistema de gestión con posicionamiento en Google para generar ventas reales.
+        {/* Subtitle */}
+        <p
+          style={{
+            maxWidth: '700px',
+            margin: '0 auto 40px',
+            fontSize: 'clamp(1rem, 1.5vw, 1.25rem)',
+            lineHeight: 1.7,
+            color: 'var(--text-secondary)',
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
+            transitionDelay: '600ms',
+          }}
+        >
+          Primera asesoría gratuita de 45–60 min para diagnóstico digital.
+          Creamos web, app o sistema de gestión con posicionamiento en Google para
+          generar <strong style={{ color: 'var(--text-primary)' }}>ventas reales</strong>.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* CTA Buttons */}
+        <div
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          style={{
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1)',
+            transitionDelay: '800ms',
+          }}
+        >
           <a
             href={whatsappHref}
-            className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-whatsapp rounded-full hover:bg-whatsapp-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-whatsapp shadow-xl shadow-green-500/30 transform hover:-translate-y-1"
+            className="btn-accent shimmer-effect"
+            style={{
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '18px 36px',
+              fontSize: '1.1rem',
+            }}
           >
-            {/* <span className="text-2xl material-icons">whatsapp</span> */}
-            <span>Hablar por WhatsApp</span>
-            <div className="absolute inset-0 rounded-full ring-2 ring-white/20 group-hover:ring-white/40 pointer-events-none"></div>
-          </a>
-          <a href="#contacto" className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
-            Agendar llamada de 20 min gratis
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Hablar por WhatsApp
           </a>
         </div>
 
-        <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a href="#precios" className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary/5 transition-colors">
-            Quiero mi app / web / sistema
-          </a>
-          <a href="#precios" className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-primary border border-primary rounded-full hover:bg-primary/5 transition-colors">
-            Optimizar mi negocio en Google
-          </a>
+        {/*  */}
+
+        {/* Trust Badges */}
+        <div
+          style={{
+            marginTop: '48px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '20px',
+            opacity: mounted ? 1 : 0,
+            transition: 'opacity 1s ease',
+            transitionDelay: '1200ms',
+          }}
+        >
+          {[
+            { icon: 'verified', text: 'Asesoría inicial gratis' },
+            { icon: 'payments', text: 'Desde $450.000 + IVA' },
+            { icon: 'trending_up', text: 'Resultados sin endeudarte' },
+          ].map((badge) => (
+            <div
+              key={badge.text}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '8px 16px',
+                background: 'rgba(255,255,255,0.7)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '100px',
+                border: '1px solid rgba(15,23,42,0.06)',
+                fontSize: '0.85rem',
+                color: 'var(--text-secondary)',
+                fontWeight: 500,
+              }}
+            >
+              <span className="material-icons" style={{ fontSize: 16, color: 'var(--accent)' }}>
+                {badge.icon}
+              </span>
+              {badge.text}
+            </div>
+          ))}
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm">
-          <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Asesoría inicial gratis (45-60 min)</span>
-          <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Planes desde $450.000 + IVA</span>
-          <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Resultados sin endeudarte</span>
-        </div>
-
-        <div className="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800/50 flex flex-col md:flex-row items-center justify-center gap-6 text-sm text-slate-500 dark:text-slate-400">
-          <span>2+ años de experiencia en desarrollo digital y posicionamiento Google para pymes</span>
-          <div className="flex -space-x-2">
-            <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-background-dark object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvDOPADC_pUzwpovoAD4Ys6FRKfavpNjTM_XitCrrJwc0g0JCeUc_37KRMuVUEflIc9nO8U0J5PoCpxuSpnDuWmAgtcAcBG_82CgKsaUGdhgadiMRtgNtY1RfRYaP7KocZZRRfXnVQ-ODfUwEBxqWbS73vSZ_v2i59Am748v3NqB57TSG0wkj0C561eSNFEs2_nU4MxImfUROHOmZWWmx8oa3WqrVUqW6iixhV23ZQwAH5-OL1Y8hC-tTBoCIhgK8xmD_KEqqkuP0" alt="Cliente 1" />
-            <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-background-dark object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1gvp3r3jWfIxBJH673UFgPyC34xODpp0q_64qj8YP8MT4kS9HhefLpFvwg_B6H5sHXoulLyfyBU-3cqLfY5knj-4gvb_EmK3UV9cI4MZ85fAnoUGVhzTub7IvFaMRYXZk2vFmjpOvH3LfCjjq2g8qdi7PA934A0g2_j3O_iRhH4OwULlPKf3D4E1oPaH0I3BTBSnP1Ijazy0mVcqoDX2Xtlc7FgGUyZQyOT-nvRh0AAD5f4JRwyBLqJhmzzVzKiQ6S8nAwAwNmsk" alt="Cliente 2" />
-            <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-background-dark object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP-j_dGPMqTnoogFS_AiSL6gPkRbaUPqX8W5QpDl3KvI0cXQ2KXE-MhfHoFIVz-AmdDMUnRdOcf-wlivvV6ri_J0a-7NGfODadrEqyaPCq1NnJ7eQmQUq3cMp71WNG9MaMfUZgd86pYa2lhOJh8kZrbkaKD_lVTtMb9OykgXroZuNOY20R7fUnB0UB6pSCYwfOqDDzXY1Qf5MwGczpQCgVB6-25uFLgY3rDLub3KxM_e8P_cwR9KyNzmGXsKFqbuSKtHYO_XX67sU" alt="Cliente 3" />
-            <div className="h-8 w-8 rounded-full ring-2 ring-white dark:ring-background-dark bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold">2+</div>
+        {/* Social Proof */}
+        <div
+          style={{
+            marginTop: '32px',
+            paddingTop: '28px',
+            borderTop: '1px solid rgba(15,23,42,0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '12px',
+            opacity: mounted ? 1 : 0,
+            transition: 'opacity 1s ease',
+            transitionDelay: '1400ms',
+          }}
+        >
+          <div className="flex -space-x-3">
+            {[
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuCvDOPADC_pUzwpovoAD4Ys6FRKfavpNjTM_XitCrrJwc0g0JCeUc_37KRMuVUEflIc9nO8U0J5PoCpxuSpnDuWmAgtcAcBG_82CgKsaUGdhgadiMRtgNtY1RfRYaP7KocZZRRfXnVQ-ODfUwEBxqWbS73vSZ_v2i59Am748v3NqB57TSG0wkj0C561eSNFEs2_nU4MxImfUROHOmZWWmx8oa3WqrVUqW6iixhV23ZQwAH5-OL1Y8hC-tTBoCIhgK8xmD_KEqqkuP0',
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuC1gvp3r3jWfIxBJH673UFgPyC34xODpp0q_64qj8YP8MT4kS9HhefLpFvwg_B6H5sHXoulLyfyBU-3cqLfY5knj-4gvb_EmK3UV9cI4MZ85fAnoUGVhzTub7IvFaMRYXZk2vFmjpOvH3LfCjjq2g8qdi7PA934A0g2_j3O_iRhH4OwULlPKf3D4E1oPaH0I3BTBSnP1Ijazy0mVcqoDX2Xtlc7FgGUyZQyOT-nvRh0AAD5f4JRwyBLqJhmzzVzKiQ6S8nAwAwNmsk',
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuCP-j_dGPMqTnoogFS_AiSL6gPkRbaUPqX8W5QpDl3KvI0cXQ2KXE-MhfHoFIVz-AmdDMUnRdOcf-wlivvV6ri_J0a-7NGfODadrEqyaPCq1NnJ7eQmQUq3cMp71WNG9MaMfUZgd86pYa2lhOJh8kZrbkaKD_lVTtMb9OykgXroZuNOY20R7fUnB0UB6pSCYwfOqDDzXY1Qf5MwGczpQCgVB6-25uFLgY3rDLub3KxM_e8P_cwR9KyNzmGXsKFqbuSKtHYO_XX67sU',
+            ].map((src, i) => (
+              <img
+                key={i}
+                src={src}
+                alt={`Cliente ${i + 1}`}
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '3px solid white',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                }}
+              />
+            ))}
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: '50%',
+                border: '3px solid white',
+                background: 'linear-gradient(135deg, var(--accent), var(--accent-secondary))',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.7rem',
+                fontWeight: 800,
+                color: 'white',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              }}
+            >
+              2+
+            </div>
           </div>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+            2+ años impulsando pymes en Atacama y todo Chile
+          </p>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 

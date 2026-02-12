@@ -1,107 +1,264 @@
 import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+
+const projects = [
+  {
+    image: '/mesa-digital.png',
+    title: 'MesaDigital',
+    location: 'Vallenar, Chile',
+    tags: [
+      { label: 'SaaS', color: '#0F2D3A' },
+      { label: 'Restaurantes', color: '#3B82F6' },
+    ],
+    description: 'Ecosistema integral que digitaliza la operación del restaurante. Reduce tiempos de espera en un 40% y aumenta ventas con menús QR inteligentes.',
+  },
+  {
+    image: '/farmacia-comunal.png',
+    title: 'Farmacia Comunal',
+    location: 'Copiapó, Chile',
+    tags: [
+      { label: 'Salud', color: '#16A34A' },
+      { label: 'Normativa', color: '#F59E0B' },
+    ],
+    description: 'Sistema integral de gestión para farmacias comunales. Trazabilidad completa de medicamentos y cumplimiento normativo al 100%.',
+  },
+  {
+    image: '/gestion-gimnasios.png',
+    title: 'Gestión Gimnasios',
+    location: 'Atacama, Chile',
+    tags: [
+      { label: 'Google Sheets', color: '#7C3AED' },
+      { label: 'Gimnasios', color: '#3B82F6' },
+    ],
+    description: 'Sistema de gestión de clientes para gimnasios. Automatiza inscripciones, validación por RUT y reportes de ingresos en tiempo real.',
+  },
+];
 
 const Portfolio: React.FC = () => {
+  const ref = useScrollReveal();
+
   return (
-    <section id="proyectos" className="py-24 bg-background-light dark:bg-background-dark relative">
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-20 right-0 w-72 h-72 bg-primary/5 rounded-full mix-blend-multiply filter blur-3xl"></div>
-        <div className="absolute bottom-20 left-0 w-72 h-72 bg-blue-100/30 rounded-full mix-blend-multiply filter blur-3xl"></div>
-      </div>
+    <section
+      id="proyectos"
+      ref={ref}
+      style={{
+        padding: '100px 0',
+        background: '#ffffff',
+        position: 'relative',
+      }}
+    >
+      {/* Background accents */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '10%',
+          right: '-5%',
+          width: '400px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(0,212,170,0.06) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-base text-primary font-semibold tracking-wide uppercase">Nuestro Portafolio</h2>
-          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
-            Galeria de Proyectos en Atacama
-          </p>
-          <p className="mt-4 max-w-2xl text-xl text-slate-500 dark:text-slate-400 mx-auto">
-            Resultados reales para negocios reales de nuestra region.
+        {/* Header */}
+        <div className="text-center animate-on-scroll" style={{ marginBottom: '64px' }}>
+          <span className="section-badge">Portafolio</span>
+          <h2 className="section-title">
+            Proyectos reales en{' '}
+            <span className="gradient-text">Atacama</span>
+          </h2>
+          <p className="section-subtitle">
+            Resultados medibles para negocios reales de nuestra región.
           </p>
         </div>
 
+        {/* Project cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Project 1 */}
-          <div className="group relative bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 border border-slate-100 dark:border-slate-700 flex flex-col h-full">
-            <div className="relative h-64 overflow-hidden">
-              <img src="/mesa-digital.png" alt="MesaDigital" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent opacity-80"></div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="flex flex-wrap gap-2 mb-2">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/90 text-white backdrop-blur-sm border border-white/10">SaaS</span>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-600/90 text-white backdrop-blur-sm border border-white/10">Restaurantes</span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-1">MesaDigital</h3>
-                <p className="text-slate-200 text-sm flex items-center">
-                  <span className="material-icons text-sm mr-1">place</span> Chile
-                </p>
-              </div>
-            </div>
-            <div className="p-6 flex-grow flex flex-col justify-between">
-              <p className="text-slate-600 dark:text-slate-300 text-sm mb-4 line-clamp-3">
-                Ecosistema integral que digitaliza la operacion del restaurante. Reduce tiempos de espera en un 40% y aumenta ventas con menus QR inteligentes.
-              </p>
-              <a href="#contacto" className="text-primary font-semibold text-sm hover:text-primary-dark inline-flex items-center mt-auto">
-                Ver caso completo <span className="material-icons text-sm ml-1">arrow_forward</span>
-              </a>
-            </div>
-          </div>
+          {projects.map((project, i) => (
+            <div
+              key={project.title}
+              className={`animate-on-scroll delay-${(i + 1) * 100}`}
+              style={{
+                borderRadius: 'var(--radius-xl)',
+                overflow: 'hidden',
+                background: '#ffffff',
+                border: '1px solid var(--border)',
+                transition: 'all 0.5s var(--ease-out-expo)',
+                display: 'flex',
+                flexDirection: 'column',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(-8px)';
+                (e.currentTarget as HTMLElement).style.boxShadow = '0 24px 64px rgba(0,212,170,0.12), 0 8px 20px rgba(0,0,0,0.06)';
+                const img = e.currentTarget.querySelector('.project-img') as HTMLElement;
+                if (img) img.style.transform = 'scale(1.08)';
+                const overlay = e.currentTarget.querySelector('.project-overlay') as HTMLElement;
+                if (overlay) overlay.style.opacity = '1';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                const img = e.currentTarget.querySelector('.project-img') as HTMLElement;
+                if (img) img.style.transform = 'scale(1)';
+                const overlay = e.currentTarget.querySelector('.project-overlay') as HTMLElement;
+                if (overlay) overlay.style.opacity = '0';
+              }}
+            >
+              {/* Image */}
+              <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="project-img"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.7s var(--ease-out-expo)',
+                  }}
+                />
+                {/* Gradient overlay */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(180deg, transparent 30%, rgba(15,23,42,0.85) 100%)',
+                  }}
+                />
 
-          {/* Project 2 */}
-          <div className="group relative bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 border border-slate-100 dark:border-slate-700 flex flex-col h-full">
-            <div className="relative h-64 overflow-hidden">
-              <img src="/farmacia-comunal.png" alt="Farmacia Comunal" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent opacity-80"></div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="flex flex-wrap gap-2 mb-2">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-600/90 text-white backdrop-blur-sm border border-white/10">Salud</span>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-500/90 text-white backdrop-blur-sm border border-white/10">Normativa</span>
+                {/* Hover overlay with "Ver caso" */}
+                <div
+                  className="project-overlay"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(0,212,170,0.85)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0,
+                    transition: 'opacity 0.4s ease',
+                  }}
+                >
+                  <span className="material-icons" style={{ color: 'white', fontSize: 40, marginBottom: 8 }}>visibility</span>
+                  <span style={{ color: 'white', fontWeight: 700, fontSize: '1rem' }}>Ver proyecto</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-1">Farmacia Comunal</h3>
-                <p className="text-slate-200 text-sm flex items-center">
-                  <span className="material-icons text-sm mr-1">place</span> Chile
-                </p>
-              </div>
-            </div>
-            <div className="p-6 flex-grow flex flex-col justify-between">
-              <p className="text-slate-600 dark:text-slate-300 text-sm mb-4 line-clamp-3">
-                Sistema integral de gestion para farmacias comunales. Trazabilidad completa de medicamentos, dispensacion por beneficiario y cumplimiento normativo al 100% segun el DS N 466 del Minsal.
-              </p>
-              <a href="#contacto" className="text-primary font-semibold text-sm hover:text-primary-dark inline-flex items-center mt-auto">
-                Ver caso completo <span className="material-icons text-sm ml-1">arrow_forward</span>
-              </a>
-            </div>
-          </div>
 
-          {/* Project 3 */}
-          <div className="group relative bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 border border-slate-100 dark:border-slate-700 flex flex-col h-full">
-            <div className="relative h-64 overflow-hidden">
-              <img src="/gestion-gimnasios.png" alt="Gestion de Clientes para Gimnasios" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent opacity-80"></div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="flex flex-wrap gap-2 mb-2">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-600/90 text-white backdrop-blur-sm border border-white/10">Google Sheets</span>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-600/90 text-white backdrop-blur-sm border border-white/10">Gimnasios</span>
+                {/* Tags */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '16px',
+                    left: '16px',
+                    right: '16px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '6px',
+                  }}
+                >
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag.label}
+                      style={{
+                        padding: '4px 12px',
+                        borderRadius: '100px',
+                        background: 'rgba(255,255,255,0.15)',
+                        backdropFilter: 'blur(8px)',
+                        color: 'white',
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        border: '1px solid rgba(255,255,255,0.2)',
+                      }}
+                    >
+                      {tag.label}
+                    </span>
+                  ))}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-1">Gestion de Clientes para Gimnasios</h3>
-                <p className="text-slate-200 text-sm flex items-center">
-                  <span className="material-icons text-sm mr-1">place</span> Chile
+              </div>
+
+              {/* Content */}
+              <div style={{ padding: '28px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <h3
+                    style={{
+                      fontSize: '1.2rem',
+                      fontWeight: 700,
+                      color: 'var(--text-primary)',
+                      margin: 0,
+                    }}
+                  >
+                    {project.title}
+                  </h3>
+                </div>
+                <p
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontSize: '0.8rem',
+                    color: 'var(--text-muted)',
+                    marginBottom: '12px',
+                  }}
+                >
+                  <span className="material-icons" style={{ fontSize: 14 }}>place</span>
+                  {project.location}
                 </p>
+                <p
+                  style={{
+                    fontSize: '0.9rem',
+                    lineHeight: 1.7,
+                    color: 'var(--text-secondary)',
+                    flex: 1,
+                    margin: 0,
+                  }}
+                >
+                  {project.description}
+                </p>
+                <a
+                  href="#contacto"
+                  style={{
+                    marginTop: '20px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                    color: 'var(--accent)',
+                    textDecoration: 'none',
+                    transition: 'gap 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.gap = '10px';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.gap = '6px';
+                  }}
+                >
+                  Ver caso completo
+                  <span className="material-icons" style={{ fontSize: 16 }}>arrow_forward</span>
+                </a>
               </div>
             </div>
-            <div className="p-6 flex-grow flex flex-col justify-between">
-              <p className="text-slate-600 dark:text-slate-300 text-sm mb-4 line-clamp-3">
-                Sistema de gestion de clientes para gimnasios en Google Sheets. Automatiza inscripciones, validacion por RUT, alertas de vencimiento y reportes de ingresos en tiempo real para mejorar retencion y rentabilidad.
-              </p>
-              <a href="#contacto" className="text-primary font-semibold text-sm hover:text-primary-dark inline-flex items-center mt-auto">
-                Ver caso completo <span className="material-icons text-sm ml-1">arrow_forward</span>
-              </a>
-            </div>
-          </div>
+          ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <a href="#contacto" className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-primary bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 transition-colors shadow-sm">
-            Solicitar una demo <span className="material-icons ml-2">grid_view</span>
+        {/* CTA */}
+        <div className="text-center animate-on-scroll delay-500" style={{ marginTop: '56px' }}>
+          <a
+            href="#contacto"
+            className="btn-ghost"
+            style={{
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <span className="material-icons" style={{ fontSize: 18 }}>grid_view</span>
+            Solicitar una demo
           </a>
         </div>
       </div>
