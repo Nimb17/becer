@@ -45,11 +45,11 @@ const plans = [
 ];
 
 const additionalServices = [
-  { name: 'Apps para dispositivos móviles', price: 'Desde $850.000 + IVA' },
-  { name: 'Software empresarial', price: 'Desde $700.000 + IVA' },
-  { name: 'Sistema de gestión empresarial', price: 'Desde $700.000 + IVA' },
-  { name: 'Creación de páginas web', price: 'Desde $450.000 + IVA' },
-  { name: 'Perfil de negocios en Google', price: 'Desde $450.000 + IVA' },
+  { name: 'Apps para dispositivos móviles', price: 'Desde $500.000' },
+  { name: 'Creación de páginas web', price: 'Desde $200.000' },
+  { name: 'Perfil de negocios en Google', price: '$120.000' },
+  { name: 'Sistema de Gestión (Automatización)', price: 'Desde $100.000' },
+  { name: 'Prueba de Software Empresarial', price: 'Gratis' },
 ];
 
 const Pricing: React.FC = () => {
