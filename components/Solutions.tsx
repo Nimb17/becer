@@ -1,34 +1,39 @@
 import React from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import EditableText from './EditableText';
 
 const solutions = [
   {
     icon: 'language',
-    title: 'Web Rápida',
-    description: 'Sitios optimizados que cargan al instante y venden tu servicio 24/7.',
+    titleKey: 'solutions.card1.title',
+    titleFallback: 'Web Rapida',
+    descriptionKey: 'solutions.card1.description',
+    descriptionFallback: 'Sitios optimizados que cargan al instante y venden tu servicio 24/7.',
     gradient: 'linear-gradient(135deg, #0F2D3A, #1a4a5e)',
-    size: 'large',
   },
   {
     icon: 'place',
-    title: 'Google Maps',
-    description: 'Aparece primero cuando busquen tu rubro en el mapa.',
+    titleKey: 'solutions.card2.title',
+    titleFallback: 'Google Maps',
+    descriptionKey: 'solutions.card2.description',
+    descriptionFallback: 'Aparece primero cuando busquen tu rubro en el mapa.',
     gradient: 'linear-gradient(135deg, #00D4AA, #00B894)',
-    size: 'small',
   },
   {
     icon: 'trending_up',
-    title: 'SEO Local',
-    description: 'Posicionamiento estratégico para clientes de tu zona.',
+    titleKey: 'solutions.card3.title',
+    titleFallback: 'SEO Local',
+    descriptionKey: 'solutions.card3.description',
+    descriptionFallback: 'Posicionamiento estrategico para clientes de tu zona.',
     gradient: 'linear-gradient(135deg, #6C5CE7, #a29bfe)',
-    size: 'small',
   },
   {
     icon: 'campaign',
-    title: 'Ads Efectivos',
-    description: 'Campañas que traen clientes reales, no solo likes.',
+    titleKey: 'solutions.card4.title',
+    titleFallback: 'Ads Efectivos',
+    descriptionKey: 'solutions.card4.description',
+    descriptionFallback: 'Campanas que traen clientes reales, no solo likes.',
     gradient: 'linear-gradient(135deg, #F97316, #FBBF24)',
-    size: 'large',
   },
 ];
 
@@ -46,7 +51,6 @@ const Solutions: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Decorative elements */}
       <div
         style={{
           position: 'absolute',
@@ -61,19 +65,29 @@ const Solutions: React.FC = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
         <div className="text-center animate-on-scroll" style={{ marginBottom: '64px' }}>
-          <span className="section-badge">La Solución Becer</span>
-          <h2 className="section-title">
-            Herramientas digitales que{' '}
-            <span className="gradient-text">venden</span>
-          </h2>
-          <p className="section-subtitle">
-            Todo lo que tu pyme necesita para dominar el mundo digital de tu ciudad.
-          </p>
+          <EditableText
+            as="span"
+            className="section-badge"
+            contentKey="solutions.header.badge"
+            fallback="La Solucion Becer"
+            multiline={false}
+          />
+          <EditableText
+            as="h2"
+            className="section-title"
+            contentKey="solutions.header.title"
+            fallback="Herramientas digitales que venden"
+            multiline={false}
+          />
+          <EditableText
+            as="p"
+            className="section-subtitle"
+            contentKey="solutions.header.subtitle"
+            fallback="Todo lo que tu pyme necesita para dominar el mundo digital de tu ciudad."
+          />
         </div>
 
-        {/* Bento Grid */}
         <div
           style={{
             display: 'grid',
@@ -81,10 +95,10 @@ const Solutions: React.FC = () => {
             gap: '20px',
           }}
         >
-          {solutions.map((sol, i) => (
+          {solutions.map((solution, index) => (
             <div
-              key={sol.title}
-              className={`animate-on-scroll delay-${(i + 1) * 100}`}
+              key={solution.titleKey}
+              className={`animate-on-scroll delay-${(index + 1) * 100}`}
               style={{
                 background: '#ffffff',
                 borderRadius: 'var(--radius-lg)',
@@ -99,26 +113,25 @@ const Solutions: React.FC = () => {
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.transform = 'translateY(-6px)';
-                (e.currentTarget as HTMLElement).style.boxShadow = 'var(--shadow-xl)';
-                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,212,170,0.2)';
-                const iconBg = e.currentTarget.querySelector('.sol-icon-bg') as HTMLElement;
+              onMouseEnter={(event) => {
+                (event.currentTarget as HTMLElement).style.transform = 'translateY(-6px)';
+                (event.currentTarget as HTMLElement).style.boxShadow = 'var(--shadow-xl)';
+                (event.currentTarget as HTMLElement).style.borderColor = 'rgba(0,212,170,0.2)';
+                const iconBg = event.currentTarget.querySelector('.sol-icon-bg') as HTMLElement;
                 if (iconBg) {
                   iconBg.style.transform = 'scale(1.1) rotate(-5deg)';
                 }
               }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-                (e.currentTarget as HTMLElement).style.boxShadow = 'none';
-                (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
-                const iconBg = e.currentTarget.querySelector('.sol-icon-bg') as HTMLElement;
+              onMouseLeave={(event) => {
+                (event.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                (event.currentTarget as HTMLElement).style.boxShadow = 'none';
+                (event.currentTarget as HTMLElement).style.borderColor = 'var(--border)';
+                const iconBg = event.currentTarget.querySelector('.sol-icon-bg') as HTMLElement;
                 if (iconBg) {
                   iconBg.style.transform = 'scale(1) rotate(0)';
                 }
               }}
             >
-              {/* Decorative gradient orb */}
               <div
                 style={{
                   position: 'absolute',
@@ -126,36 +139,40 @@ const Solutions: React.FC = () => {
                   right: '-30px',
                   width: '140px',
                   height: '140px',
-                  background: sol.gradient,
+                  background: solution.gradient,
                   borderRadius: '50%',
                   opacity: 0.06,
                   filter: 'blur(20px)',
                 }}
               />
 
-              {/* Icon */}
               <div
                 className="sol-icon-bg"
                 style={{
                   width: '64px',
                   height: '64px',
                   borderRadius: '20px',
-                  background: sol.gradient,
+                  background: solution.gradient,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '24px',
                   transition: 'transform 0.4s var(--ease-spring)',
-                  boxShadow: `0 8px 24px ${sol.gradient.includes('#00D4AA') ? 'rgba(0,212,170,0.2)' : 'rgba(15,45,58,0.15)'}`,
+                  boxShadow: `0 8px 24px ${
+                    solution.gradient.includes('#00D4AA') ? 'rgba(0,212,170,0.2)' : 'rgba(15,45,58,0.15)'
+                  }`,
                 }}
               >
                 <span className="material-icons" style={{ color: 'white', fontSize: '28px' }}>
-                  {sol.icon}
+                  {solution.icon}
                 </span>
               </div>
 
-              {/* Content */}
-              <h3
+              <EditableText
+                as="h3"
+                contentKey={solution.titleKey}
+                fallback={solution.titleFallback}
+                multiline={false}
                 style={{
                   fontSize: '1.3rem',
                   fontWeight: 700,
@@ -163,21 +180,19 @@ const Solutions: React.FC = () => {
                   marginBottom: '10px',
                   letterSpacing: '-0.01em',
                 }}
-              >
-                {sol.title}
-              </h3>
-              <p
+              />
+              <EditableText
+                as="p"
+                contentKey={solution.descriptionKey}
+                fallback={solution.descriptionFallback}
                 style={{
                   fontSize: '0.95rem',
                   lineHeight: 1.7,
                   color: 'var(--text-secondary)',
                   margin: 0,
                 }}
-              >
-                {sol.description}
-              </p>
+              />
 
-              {/* Arrow indicator */}
               <div
                 style={{
                   marginTop: '20px',
@@ -189,8 +204,10 @@ const Solutions: React.FC = () => {
                   color: 'var(--accent)',
                 }}
               >
-                Saber más
-                <span className="material-icons" style={{ fontSize: '16px' }}>arrow_forward</span>
+                Saber mas
+                <span className="material-icons" style={{ fontSize: '16px' }}>
+                  arrow_forward
+                </span>
               </div>
             </div>
           ))}

@@ -1,5 +1,6 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import EditableText from './EditableText';
 
 const Footer: React.FC = () => {
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;
@@ -14,24 +15,24 @@ const Footer: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
     if (!formData.name.trim() || !formData.phone.trim()) {
       setStatus('error');
-      setStatusMessage('Completa nombre y teléfono para continuar.');
+      setStatusMessage('Completa nombre y telefono para continuar.');
       return;
     }
 
     const messageText = [
       'Nueva solicitud desde la web',
       `Nombre: ${formData.name}`,
-      `Teléfono: ${formData.phone}`,
+      `Telefono: ${formData.phone}`,
       `Mensaje: ${formData.message || 'Sin mensaje'}`,
     ].join('\n');
 
@@ -71,10 +72,10 @@ const Footer: React.FC = () => {
 
       window.location.href = `mailto:contacto@asesoriasbecer.cl?subject=${encodeURIComponent('Nueva solicitud desde la web')}&body=${encodeURIComponent(messageText)}`;
       setStatus('success');
-      setStatusMessage('Abrimos tu correo para completar el envío.');
+      setStatusMessage('Abrimos tu correo para completar el envio.');
     } catch {
       setStatus('error');
-      setStatusMessage('Ocurrió un problema al enviar. Intenta nuevamente o escríbenos por WhatsApp.');
+      setStatusMessage('Ocurrio un problema al enviar. Intenta nuevamente o escribenos por WhatsApp.');
     }
   };
 
@@ -101,12 +102,12 @@ const Footer: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Decorative mesh */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(circle at 80% 20%, rgba(0,212,170,0.08) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(108,92,231,0.06) 0%, transparent 50%)',
+          background:
+            'radial-gradient(circle at 80% 20%, rgba(0,212,170,0.08) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(108,92,231,0.06) 0%, transparent 50%)',
           pointerEvents: 'none',
         }}
       />
@@ -123,17 +124,15 @@ const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" style={{ paddingTop: '80px', paddingBottom: '48px' }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
-          {/* Left column – Info */}
           <div className="animate-on-scroll">
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
-              <img
-                src="/logo-blanco.png"
-                alt="Logo Asesorías Becer"
-                style={{ height: '56px', width: 'auto', objectFit: 'contain' }}
-              />
+              <img src="/logo-blanco.png" alt="Logo Asesorias Becer" style={{ height: '56px', width: 'auto', objectFit: 'contain' }} />
             </div>
 
-            <p
+            <EditableText
+              as="p"
+              contentKey="footer.intro"
+              fallback="Impulsando el crecimiento digital de la Region de Atacama con cobertura remota en todo Chile."
               style={{
                 fontSize: '1rem',
                 lineHeight: 1.6,
@@ -141,14 +140,11 @@ const Footer: React.FC = () => {
                 maxWidth: '420px',
                 marginBottom: '32px',
               }}
-            >
-              Impulsando el crecimiento digital de la Región de Atacama con cobertura remota en todo Chile.
-            </p>
+            />
 
-            {/* Contact info cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '40px' }}>
               {[
-                { icon: 'location_on', text: 'Atención remota para todo Chile', href: '' },
+                { icon: 'location_on', text: 'Atencion remota para todo Chile', href: '' },
                 { icon: 'email', text: 'contacto@asesoriasbecer.cl', href: 'mailto:contacto@asesoriasbecer.cl' },
                 { icon: 'phone', text: '+56 9 1234 5678', href: 'tel:+56912345678' },
               ].map((contact) => (
@@ -165,13 +161,13 @@ const Footer: React.FC = () => {
                     transition: 'all 0.3s ease',
                     cursor: contact.href ? 'pointer' : 'default',
                   }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)';
-                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,212,170,0.2)';
+                  onMouseEnter={(event) => {
+                    (event.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)';
+                    (event.currentTarget as HTMLElement).style.borderColor = 'rgba(0,212,170,0.2)';
                   }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)';
-                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)';
+                  onMouseLeave={(event) => {
+                    (event.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)';
+                    (event.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)';
                   }}
                 >
                   <div
@@ -204,15 +200,12 @@ const Footer: React.FC = () => {
                       {contact.text}
                     </a>
                   ) : (
-                    <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', fontWeight: 500 }}>
-                      {contact.text}
-                    </span>
+                    <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', fontWeight: 500 }}>{contact.text}</span>
                   )}
                 </div>
               ))}
             </div>
 
-            {/* Trust */}
             <div
               style={{
                 display: 'flex',
@@ -220,7 +213,7 @@ const Footer: React.FC = () => {
                 gap: '12px',
               }}
             >
-              {['2+ años de experiencia', 'Todo Chile remoto', 'Diagnóstico gratis'].map((text) => (
+              {['2+ anos de experiencia', 'Todo Chile remoto', 'Diagnostico gratis'].map((text) => (
                 <span
                   key={text}
                   style={{
@@ -239,14 +232,12 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Right column – Form */}
           <div className="animate-on-scroll delay-200">
             <div
               style={{
                 position: 'relative',
               }}
             >
-              {/* Glow effect behind form */}
               <div
                 style={{
                   position: 'absolute',
@@ -267,7 +258,11 @@ const Footer: React.FC = () => {
                   boxShadow: '0 24px 64px rgba(0,0,0,0.15)',
                 }}
               >
-                <h3
+                <EditableText
+                  as="h3"
+                  contentKey="footer.form.title"
+                  fallback="Agenda tu diagnostico"
+                  multiline={false}
                   style={{
                     fontSize: '1.5rem',
                     fontWeight: 800,
@@ -275,19 +270,18 @@ const Footer: React.FC = () => {
                     marginBottom: '8px',
                     letterSpacing: '-0.02em',
                   }}
-                >
-                  Agenda tu diagnóstico
-                </h3>
-                <p
+                />
+                <EditableText
+                  as="p"
+                  contentKey="footer.form.subtitle"
+                  fallback="45-60 minutos gratis para analizar tu presencia digital."
                   style={{
                     fontSize: '0.9rem',
                     color: 'var(--text-secondary)',
                     marginBottom: '28px',
                     lineHeight: 1.5,
                   }}
-                >
-                  45–60 minutos gratis para analizar tu presencia digital.
-                </p>
+                />
 
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div>
@@ -312,13 +306,13 @@ const Footer: React.FC = () => {
                       placeholder="Tu nombre"
                       required
                       style={inputStyle}
-                      onFocus={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
-                        (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
+                      onFocus={(event) => {
+                        (event.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
+                        (event.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
                       }}
-                      onBlur={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
-                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      onBlur={(event) => {
+                        (event.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
+                        (event.currentTarget as HTMLElement).style.boxShadow = 'none';
                       }}
                     />
                   </div>
@@ -333,7 +327,7 @@ const Footer: React.FC = () => {
                         marginBottom: '6px',
                       }}
                     >
-                      Teléfono
+                      Telefono
                     </label>
                     <input
                       type="tel"
@@ -344,13 +338,13 @@ const Footer: React.FC = () => {
                       placeholder="+56 9 ..."
                       required
                       style={inputStyle}
-                      onFocus={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
-                        (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
+                      onFocus={(event) => {
+                        (event.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
+                        (event.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
                       }}
-                      onBlur={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
-                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      onBlur={(event) => {
+                        (event.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
+                        (event.currentTarget as HTMLElement).style.boxShadow = 'none';
                       }}
                     />
                   </div>
@@ -378,13 +372,13 @@ const Footer: React.FC = () => {
                         resize: 'vertical' as const,
                         minHeight: '80px',
                       }}
-                      onFocus={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
-                        (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
+                      onFocus={(event) => {
+                        (event.currentTarget as HTMLElement).style.borderColor = 'var(--accent)';
+                        (event.currentTarget as HTMLElement).style.boxShadow = '0 0 0 3px rgba(0,212,170,0.12)';
                       }}
-                      onBlur={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
-                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      onBlur={(event) => {
+                        (event.currentTarget as HTMLElement).style.borderColor = 'rgba(15,23,42,0.1)';
+                        (event.currentTarget as HTMLElement).style.boxShadow = 'none';
                       }}
                     />
                   </div>
@@ -404,7 +398,9 @@ const Footer: React.FC = () => {
                   >
                     {status === 'sending' ? (
                       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                        <span className="material-icons" style={{ fontSize: 18, animation: 'orbit 1s linear infinite' }}>sync</span>
+                        <span className="material-icons" style={{ fontSize: 18, animation: 'orbit 1s linear infinite' }}>
+                          sync
+                        </span>
                         Enviando...
                       </span>
                     ) : (
@@ -433,7 +429,6 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div
           style={{
             marginTop: '64px',
@@ -449,7 +444,7 @@ const Footer: React.FC = () => {
               fontWeight: 500,
             }}
           >
-            © 2026 Asesorías Becer. Todos los derechos reservados.
+            © 2026 Asesorias Becer. Todos los derechos reservados.
           </p>
         </div>
       </div>

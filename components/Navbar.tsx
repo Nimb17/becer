@@ -1,4 +1,5 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import EditableText from './EditableText';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { href: '#problemas', label: 'Diagnóstico' },
+    { href: '#problemas', label: 'Diagnostico' },
     { href: '#soluciones', label: 'Soluciones' },
     { href: '#proyectos', label: 'Proyectos' },
     { href: '#precios', label: 'Servicios' },
@@ -30,14 +31,9 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-        ? 'py-2'
-        : 'py-4'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'py-2' : 'py-4'}`}
       style={{
-        background: scrolled
-          ? 'rgba(255,255,255,0.82)'
-          : 'transparent',
+        background: scrolled ? 'rgba(255,255,255,0.82)' : 'transparent',
         backdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(15,23,42,0.06)' : '1px solid transparent',
@@ -46,7 +42,6 @@ const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="flex items-center group py-2"
@@ -55,12 +50,11 @@ const Navbar: React.FC = () => {
           >
             <img
               src="/logo-color.png"
-              alt="Logo Asesorías Becer"
+              alt="Logo Asesorias Becer"
               className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </button>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.replace('#', '');
@@ -73,16 +67,16 @@ const Navbar: React.FC = () => {
                     color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
                     background: isActive ? 'rgba(0, 212, 170, 0.08)' : 'transparent',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={(event) => {
                     if (!isActive) {
-                      (e.currentTarget as HTMLElement).style.background = 'rgba(15,23,42,0.04)';
-                      (e.currentTarget as HTMLElement).style.color = 'var(--text-primary)';
+                      (event.currentTarget as HTMLElement).style.background = 'rgba(15,23,42,0.04)';
+                      (event.currentTarget as HTMLElement).style.color = 'var(--text-primary)';
                     }
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={(event) => {
                     if (!isActive) {
-                      (e.currentTarget as HTMLElement).style.background = 'transparent';
-                      (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)';
+                      (event.currentTarget as HTMLElement).style.background = 'transparent';
+                      (event.currentTarget as HTMLElement).style.color = 'var(--text-secondary)';
                     }
                   }}
                 >
@@ -111,19 +105,20 @@ const Navbar: React.FC = () => {
                 textDecoration: 'none',
               }}
             >
-              <span style={{
-                width: 6,
-                height: 6,
-                borderRadius: '50%',
-                background: '#00D4AA',
-                display: 'inline-block',
-                animation: 'glow-pulse 2s ease infinite',
-              }} />
-              Agenda tu Asesoría
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: '50%',
+                  background: '#00D4AA',
+                  display: 'inline-block',
+                  animation: 'glow-pulse 2s ease infinite',
+                }}
+              />
+              <EditableText contentKey="navbar.cta" fallback="Agenda tu Asesoria" multiline={false} />
             </a>
           </div>
 
-          {/* Mobile toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 rounded-xl transition-colors"
@@ -133,17 +128,13 @@ const Navbar: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <span
-              className="material-icons"
-              style={{ color: 'var(--text-primary)', fontSize: 24 }}
-            >
+            <span className="material-icons" style={{ color: 'var(--text-primary)', fontSize: 24 }}>
               {isOpen ? 'close' : 'menu'}
             </span>
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         style={{
           maxHeight: isOpen ? '420px' : '0',
@@ -158,7 +149,7 @@ const Navbar: React.FC = () => {
         className="md:hidden"
       >
         <div className="px-4 pt-2 pb-6 space-y-1">
-          {navLinks.map((link, i) => (
+          {navLinks.map((link, index) => (
             <a
               key={link.href}
               href={link.href}
@@ -166,13 +157,13 @@ const Navbar: React.FC = () => {
               className="block px-4 py-3 rounded-xl text-base font-medium transition-all"
               style={{
                 color: 'var(--text-primary)',
-                animationDelay: `${i * 60}ms`,
+                animationDelay: `${index * 60}ms`,
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = 'rgba(0, 212, 170, 0.06)';
+              onMouseEnter={(event) => {
+                (event.currentTarget as HTMLElement).style.background = 'rgba(0, 212, 170, 0.06)';
               }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = 'transparent';
+              onMouseLeave={(event) => {
+                (event.currentTarget as HTMLElement).style.background = 'transparent';
               }}
             >
               {link.label}
@@ -185,7 +176,7 @@ const Navbar: React.FC = () => {
               className="btn-accent block w-full text-center"
               style={{ textDecoration: 'none', padding: '14px 24px', fontSize: '1rem' }}
             >
-              Agenda tu Asesoría
+              <EditableText contentKey="navbar.cta" fallback="Agenda tu Asesoria" multiline={false} />
             </a>
           </div>
         </div>

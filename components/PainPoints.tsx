@@ -1,12 +1,16 @@
-﻿import React from 'react';
+import React from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import EditableText from './EditableText';
 
 const painData = [
   {
     icon: 'visibility_off',
     accentIcon: 'search_off',
-    title: 'Eres invisible en Google',
-    description: 'Tus clientes buscan "servicio en Vallenar" pero solo encuentran a tu competencia. Estás perdiendo ventas diarias.',
+    titleKey: 'pain.card1.title',
+    titleFallback: 'Eres invisible en Google',
+    descriptionKey: 'pain.card1.description',
+    descriptionFallback:
+      'Tus clientes buscan servicio en Vallenar pero solo encuentran a tu competencia. Estas perdiendo ventas diarias.',
     color: '#F59E0B',
     bgGradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, rgba(245, 158, 11, 0.02) 100%)',
     stat: '90%',
@@ -15,18 +19,24 @@ const painData = [
   {
     icon: 'trending_down',
     accentIcon: 'money_off',
-    title: 'Publicidad que se pierde',
-    description: 'Pagas por volantes que terminan en la basura. El marketing digital es medible y mucho más económico.',
+    titleKey: 'pain.card2.title',
+    titleFallback: 'Publicidad que se pierde',
+    descriptionKey: 'pain.card2.description',
+    descriptionFallback:
+      'Pagas por volantes que terminan en la basura. El marketing digital es medible y mucho mas economico.',
     color: '#EF4444',
     bgGradient: 'linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, rgba(239, 68, 68, 0.02) 100%)',
     stat: '3x',
-    statLabel: 'más caro sin digital',
+    statLabel: 'mas caro sin digital',
   },
   {
     icon: 'sentiment_dissatisfied',
     accentIcon: 'shield',
-    title: 'Falta de confianza',
-    description: 'Sin una web o ficha de Google Maps profesional, los clientes locales desconfían de la calidad de tu servicio.',
+    titleKey: 'pain.card3.title',
+    titleFallback: 'Falta de confianza',
+    descriptionKey: 'pain.card3.description',
+    descriptionFallback:
+      'Sin una web o ficha de Google Maps profesional, los clientes locales desconfian de la calidad de tu servicio.',
     color: '#F97316',
     bgGradient: 'linear-gradient(135deg, rgba(249, 115, 22, 0.06) 0%, rgba(249, 115, 22, 0.02) 100%)',
     stat: '75%',
@@ -47,7 +57,6 @@ const PainPoints: React.FC = () => {
         position: 'relative',
       }}
     >
-      {/* Subtle background pattern */}
       <div
         style={{
           position: 'absolute',
@@ -60,29 +69,28 @@ const PainPoints: React.FC = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
         <div className="text-center animate-on-scroll" style={{ marginBottom: '64px' }}>
-          <span className="section-badge">Diagnóstico</span>
-          <h2 className="section-title">¿Te identificas con esto?</h2>
-          <p className="section-subtitle">
-            La mayoría de los emprendedores en Atacama enfrentan los mismos
-            obstáculos invisibles que frenan su crecimiento.
-          </p>
+          <EditableText as="span" className="section-badge" contentKey="pain.header.badge" fallback="Diagnostico" multiline={false} />
+          <EditableText as="h2" className="section-title" contentKey="pain.header.title" fallback="Te identificas con esto?" multiline={false} />
+          <EditableText
+            as="p"
+            className="section-subtitle"
+            contentKey="pain.header.subtitle"
+            fallback="La mayoria de los emprendedores en Atacama enfrentan los mismos obstaculos invisibles que frenan su crecimiento."
+          />
         </div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {painData.map((pain, i) => (
+          {painData.map((pain, index) => (
             <div
-              key={pain.title}
-              className={`animate-on-scroll delay-${(i + 1) * 100} card-premium`}
+              key={pain.titleKey}
+              className={`animate-on-scroll delay-${(index + 1) * 100} card-premium`}
               style={{
                 padding: '36px 32px',
                 position: 'relative',
                 overflow: 'hidden',
               }}
             >
-              {/* Background gradient accent */}
               <div
                 style={{
                   position: 'absolute',
@@ -94,7 +102,6 @@ const PainPoints: React.FC = () => {
                 className="group-hover-bg"
               />
 
-              {/* Decorative large icon */}
               <div
                 style={{
                   position: 'absolute',
@@ -107,10 +114,11 @@ const PainPoints: React.FC = () => {
                   pointerEvents: 'none',
                 }}
               >
-                <span className="material-icons" style={{ fontSize: 'inherit' }}>{pain.icon}</span>
+                <span className="material-icons" style={{ fontSize: 'inherit' }}>
+                  {pain.icon}
+                </span>
               </div>
 
-              {/* Stat pill */}
               <div
                 style={{
                   display: 'inline-flex',
@@ -147,7 +155,6 @@ const PainPoints: React.FC = () => {
                 </span>
               </div>
 
-              {/* Icon */}
               <div
                 style={{
                   width: '52px',
@@ -160,16 +167,16 @@ const PainPoints: React.FC = () => {
                   marginBottom: '20px',
                 }}
               >
-                <span
-                  className="material-icons"
-                  style={{ color: pain.color, fontSize: '26px' }}
-                >
+                <span className="material-icons" style={{ color: pain.color, fontSize: '26px' }}>
                   {pain.accentIcon}
                 </span>
               </div>
 
-              {/* Content */}
-              <h3
+              <EditableText
+                as="h3"
+                contentKey={pain.titleKey}
+                fallback={pain.titleFallback}
+                multiline={false}
                 style={{
                   fontSize: '1.25rem',
                   fontWeight: 700,
@@ -177,21 +184,19 @@ const PainPoints: React.FC = () => {
                   marginBottom: '12px',
                   letterSpacing: '-0.01em',
                 }}
-              >
-                {pain.title}
-              </h3>
-              <p
+              />
+              <EditableText
+                as="p"
+                contentKey={pain.descriptionKey}
+                fallback={pain.descriptionFallback}
                 style={{
                   fontSize: '0.95rem',
                   lineHeight: 1.7,
                   color: 'var(--text-secondary)',
                   margin: 0,
                 }}
-              >
-                {pain.description}
-              </p>
+              />
 
-              {/* Bottom accent line */}
               <div
                 style={{
                   position: 'absolute',
