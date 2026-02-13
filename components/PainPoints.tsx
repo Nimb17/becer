@@ -7,14 +7,16 @@ const painData = [
     icon: 'visibility_off',
     accentIcon: 'search_off',
     titleKey: 'pain.card1.title',
-    titleFallback: 'Eres invisible en Google',
+    titleFallback: 'Invisible en Google y sin confianza online',
     descriptionKey: 'pain.card1.description',
     descriptionFallback:
-      'Tus clientes buscan servicio en Vallenar pero solo encuentran a tu competencia. Estas perdiendo ventas diarias.',
+      'Cuando no apareces en Google ni tienes presencia digital profesional, los clientes te comparan mal y terminan eligiendo a otro.',
+    statKey: 'pain.card1.stat',
+    statFallback: '90%',
+    statLabelKey: 'pain.card1.statLabel',
+    statLabelFallback: 'busca primero en Google',
     color: '#F59E0B',
     bgGradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, rgba(245, 158, 11, 0.02) 100%)',
-    stat: '90%',
-    statLabel: 'busca primero en Google',
   },
   {
     icon: 'trending_down',
@@ -24,23 +26,27 @@ const painData = [
     descriptionKey: 'pain.card2.description',
     descriptionFallback:
       'Pagas por volantes que terminan en la basura. El marketing digital es medible y mucho mas economico.',
+    statKey: 'pain.card2.stat',
+    statFallback: '3x',
+    statLabelKey: 'pain.card2.statLabel',
+    statLabelFallback: 'mas caro sin digital',
     color: '#EF4444',
     bgGradient: 'linear-gradient(135deg, rgba(239, 68, 68, 0.06) 0%, rgba(239, 68, 68, 0.02) 100%)',
-    stat: '3x',
-    statLabel: 'mas caro sin digital',
   },
   {
     icon: 'sentiment_dissatisfied',
     accentIcon: 'shield',
     titleKey: 'pain.card3.title',
-    titleFallback: 'Falta de confianza',
+    titleFallback: 'Atiendes tarde y pierdes consultas',
     descriptionKey: 'pain.card3.description',
     descriptionFallback:
-      'Sin una web o ficha de Google Maps profesional, los clientes locales desconfian de la calidad de tu servicio.',
+      'Mensajes sin respuesta, cotizaciones demoradas y seguimiento manual hacen que los interesados se enfrien antes de comprar.',
+    statKey: 'pain.card3.stat',
+    statFallback: '58%',
+    statLabelKey: 'pain.card3.statLabel',
+    statLabelFallback: 'abandona sin respuesta rapida',
     color: '#F97316',
     bgGradient: 'linear-gradient(135deg, rgba(249, 115, 22, 0.06) 0%, rgba(249, 115, 22, 0.02) 100%)',
-    stat: '75%',
-    statLabel: 'no compra sin web',
   },
 ];
 
@@ -98,6 +104,7 @@ const PainPoints: React.FC = () => {
                   background: pain.bgGradient,
                   opacity: 0,
                   transition: 'opacity 0.5s ease',
+                  pointerEvents: 'none',
                 }}
                 className="group-hover-bg"
               />
@@ -139,9 +146,13 @@ const PainPoints: React.FC = () => {
                     letterSpacing: '-0.02em',
                   }}
                 >
-                  {pain.stat}
+                  <EditableText as="span" contentKey={pain.statKey} fallback={pain.statFallback} multiline={false} />
                 </span>
-                <span
+                <EditableText
+                  as="span"
+                  contentKey={pain.statLabelKey}
+                  fallback={pain.statLabelFallback}
+                  multiline={false}
                   style={{
                     fontSize: '0.7rem',
                     fontWeight: 600,
@@ -151,8 +162,7 @@ const PainPoints: React.FC = () => {
                     letterSpacing: '0.02em',
                   }}
                 >
-                  {pain.statLabel}
-                </span>
+                </EditableText>
               </div>
 
               <div

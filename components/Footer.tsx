@@ -92,6 +92,18 @@ const Footer: React.FC = () => {
     outline: 'none',
   };
 
+  const contacts = [
+    { icon: 'location_on', key: 'footer.contact.location', fallback: 'Atencion remota para todo Chile', href: '' },
+    { icon: 'email', key: 'footer.contact.email', fallback: 'contacto@asesoriasbecer.cl', href: 'mailto:contacto@asesoriasbecer.cl' },
+    { icon: 'phone', key: 'footer.contact.phone', fallback: '+56 9 1234 5678', href: 'tel:+56912345678' },
+  ];
+
+  const badges = [
+    { key: 'footer.badge.1', fallback: '2+ anos de experiencia' },
+    { key: 'footer.badge.2', fallback: 'Todo Chile remoto' },
+    { key: 'footer.badge.3', fallback: 'Diagnostico gratis' },
+  ];
+
   return (
     <footer
       id="contacto"
@@ -143,13 +155,9 @@ const Footer: React.FC = () => {
             />
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '40px' }}>
-              {[
-                { icon: 'location_on', text: 'Atencion remota para todo Chile', href: '' },
-                { icon: 'email', text: 'contacto@asesoriasbecer.cl', href: 'mailto:contacto@asesoriasbecer.cl' },
-                { icon: 'phone', text: '+56 9 1234 5678', href: 'tel:+56912345678' },
-              ].map((contact) => (
+              {contacts.map((contact) => (
                 <div
-                  key={contact.icon}
+                  key={contact.key}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -197,10 +205,16 @@ const Footer: React.FC = () => {
                         transition: 'color 0.2s',
                       }}
                     >
-                      {contact.text}
+                      <EditableText as="span" contentKey={contact.key} fallback={contact.fallback} multiline={false} />
                     </a>
                   ) : (
-                    <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', fontWeight: 500 }}>{contact.text}</span>
+                    <EditableText
+                      as="span"
+                      contentKey={contact.key}
+                      fallback={contact.fallback}
+                      multiline={false}
+                      style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', fontWeight: 500 }}
+                    />
                   )}
                 </div>
               ))}
@@ -213,9 +227,9 @@ const Footer: React.FC = () => {
                 gap: '12px',
               }}
             >
-              {['2+ anos de experiencia', 'Todo Chile remoto', 'Diagnostico gratis'].map((text) => (
+              {badges.map((badge) => (
                 <span
-                  key={text}
+                  key={badge.key}
                   style={{
                     padding: '6px 14px',
                     borderRadius: '100px',
@@ -226,7 +240,7 @@ const Footer: React.FC = () => {
                     fontWeight: 600,
                   }}
                 >
-                  {text}
+                  <EditableText as="span" contentKey={badge.key} fallback={badge.fallback} multiline={false} />
                 </span>
               ))}
             </div>
@@ -404,7 +418,7 @@ const Footer: React.FC = () => {
                         Enviando...
                       </span>
                     ) : (
-                      'Solicitar llamada gratis'
+                      <EditableText as="span" contentKey="footer.form.cta" fallback="Solicitar llamada gratis" multiline={false} />
                     )}
                   </button>
 
@@ -444,7 +458,12 @@ const Footer: React.FC = () => {
               fontWeight: 500,
             }}
           >
-            © 2026 Asesorias Becer. Todos los derechos reservados.
+            <EditableText
+              as="span"
+              contentKey="footer.copyright"
+              fallback="© 2026 Asesorias Becer. Todos los derechos reservados."
+              multiline={false}
+            />
           </p>
         </div>
       </div>

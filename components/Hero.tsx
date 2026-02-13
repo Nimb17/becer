@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import EditableText from './EditableText';
 
@@ -174,33 +174,7 @@ const Hero: React.FC = () => {
             transitionDelay: '1200ms',
           }}
         >
-          {[
-            { icon: 'verified', text: 'Asesoria inicial gratis' },
-            { icon: 'payments', text: 'Desde $450.000 + IVA' },
-            { icon: 'trending_up', text: 'Resultados sin endeudarte' },
-          ].map((badge) => (
-            <div
-              key={badge.text}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 16px',
-                background: 'rgba(255,255,255,0.7)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '100px',
-                border: '1px solid rgba(15,23,42,0.06)',
-                fontSize: '0.85rem',
-                color: 'var(--text-secondary)',
-                fontWeight: 500,
-              }}
-            >
-              <span className="material-icons" style={{ fontSize: 16, color: 'var(--accent)' }}>
-                {badge.icon}
-              </span>
-              {badge.text}
-            </div>
-          ))}
+         
         </div>
 
         <div

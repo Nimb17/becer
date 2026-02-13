@@ -1,25 +1,32 @@
 import React from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import EditableText from './EditableText';
 
 const steps = [
   {
     number: '01',
-    title: 'Auditoría Gratuita',
-    description: 'Analizamos tu presencia actual en Google y redes sociales sin costo alguno.',
+    titleKey: 'process.step1.title',
+    titleFallback: 'Auditoria Gratuita',
+    descriptionKey: 'process.step1.description',
+    descriptionFallback: 'Analizamos tu presencia actual en Google y redes sociales sin costo alguno.',
     icon: 'search',
     accent: '#00D4AA',
   },
   {
     number: '02',
-    title: 'Plan a Medida',
-    description: 'Diseñamos una estrategia que se ajuste a tu presupuesto y tipo de negocio.',
+    titleKey: 'process.step2.title',
+    titleFallback: 'Plan a Medida',
+    descriptionKey: 'process.step2.description',
+    descriptionFallback: 'Disenamos una estrategia que se ajuste a tu presupuesto y tipo de negocio.',
     icon: 'architecture',
     accent: '#6C5CE7',
   },
   {
     number: '03',
-    title: 'Lanzamiento',
-    description: 'Implementamos las mejoras y empezamos a medir resultados de inmediato.',
+    titleKey: 'process.step3.title',
+    titleFallback: 'Lanzamiento',
+    descriptionKey: 'process.step3.description',
+    descriptionFallback: 'Implementamos las mejoras y empezamos a medir resultados de inmediato.',
     icon: 'rocket_launch',
     accent: '#F59E0B',
   },
@@ -38,7 +45,6 @@ const Process: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Decorative */}
       <div
         style={{
           position: 'absolute',
@@ -53,20 +59,18 @@ const Process: React.FC = () => {
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
         <div className="text-center animate-on-scroll" style={{ marginBottom: '72px' }}>
-          <span className="section-badge">Proceso</span>
-          <h2 className="section-title">
-            ¿Cómo trabajamos?
-          </h2>
-          <p className="section-subtitle">
-            Simple, directo y sin tecnicismos. Tres pasos para transformar tu negocio.
-          </p>
+          <EditableText as="span" className="section-badge" contentKey="process.header.badge" fallback="Proceso" multiline={false} />
+          <EditableText as="h2" className="section-title" contentKey="process.header.title" fallback="Como trabajamos?" multiline={false} />
+          <EditableText
+            as="p"
+            className="section-subtitle"
+            contentKey="process.header.subtitle"
+            fallback="Simple, directo y sin tecnicismos. Tres pasos para transformar tu negocio."
+          />
         </div>
 
-        {/* Steps */}
         <div style={{ position: 'relative' }}>
-          {/* Connecting line - desktop */}
           <div
             className="hidden lg:block"
             style={{
@@ -81,16 +85,15 @@ const Process: React.FC = () => {
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {steps.map((step, i) => (
+            {steps.map((step, index) => (
               <div
                 key={step.number}
-                className={`animate-on-scroll delay-${(i + 1) * 200}`}
+                className={`animate-on-scroll delay-${(index + 1) * 200}`}
                 style={{
                   textAlign: 'center',
                   position: 'relative',
                 }}
               >
-                {/* Number + Icon container */}
                 <div
                   style={{
                     position: 'relative',
@@ -102,7 +105,6 @@ const Process: React.FC = () => {
                     marginBottom: '28px',
                   }}
                 >
-                  {/* Background ring */}
                   <div
                     style={{
                       position: 'absolute',
@@ -112,7 +114,6 @@ const Process: React.FC = () => {
                       background: `${step.accent}06`,
                     }}
                   />
-                  {/* Animated accent ring */}
                   <div
                     style={{
                       position: 'absolute',
@@ -120,10 +121,9 @@ const Process: React.FC = () => {
                       borderRadius: '50%',
                       border: `2px dashed ${step.accent}30`,
                       animation: 'orbit 20s linear infinite',
-                      animationDelay: `${i * -5}s`,
+                      animationDelay: `${index * -5}s`,
                     }}
                   />
-                  {/* Inner circle */}
                   <div
                     style={{
                       width: '68px',
@@ -136,11 +136,11 @@ const Process: React.FC = () => {
                       boxShadow: `0 8px 24px ${step.accent}30`,
                       transition: 'transform 0.4s var(--ease-spring)',
                     }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.transform = 'scale(1.1)';
+                    onMouseEnter={(event) => {
+                      (event.currentTarget as HTMLElement).style.transform = 'scale(1.1)';
                     }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                    onMouseLeave={(event) => {
+                      (event.currentTarget as HTMLElement).style.transform = 'scale(1)';
                     }}
                   >
                     <span className="material-icons" style={{ color: 'white', fontSize: '28px' }}>
@@ -149,7 +149,6 @@ const Process: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Step number */}
                 <div
                   style={{
                     fontSize: '0.75rem',
@@ -163,8 +162,11 @@ const Process: React.FC = () => {
                   Paso {step.number}
                 </div>
 
-                {/* Title */}
-                <h3
+                <EditableText
+                  as="h3"
+                  contentKey={step.titleKey}
+                  fallback={step.titleFallback}
+                  multiline={false}
                   style={{
                     fontSize: '1.3rem',
                     fontWeight: 700,
@@ -172,12 +174,12 @@ const Process: React.FC = () => {
                     marginBottom: '12px',
                     letterSpacing: '-0.01em',
                   }}
-                >
-                  {step.title}
-                </h3>
+                />
 
-                {/* Description */}
-                <p
+                <EditableText
+                  as="p"
+                  contentKey={step.descriptionKey}
+                  fallback={step.descriptionFallback}
                   style={{
                     fontSize: '0.95rem',
                     lineHeight: 1.7,
@@ -185,12 +187,9 @@ const Process: React.FC = () => {
                     maxWidth: '280px',
                     margin: '0 auto',
                   }}
-                >
-                  {step.description}
-                </p>
+                />
 
-                {/* Arrow connector on mobile */}
-                {i < steps.length - 1 && (
+                {index < steps.length - 1 && (
                   <div
                     className="lg:hidden"
                     style={{

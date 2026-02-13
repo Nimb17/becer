@@ -193,7 +193,7 @@ const Solutions: React.FC = () => {
                 }}
               />
 
-              <div
+             {/*  <div
                 style={{
                   marginTop: '20px',
                   display: 'flex',
@@ -208,7 +208,7 @@ const Solutions: React.FC = () => {
                 <span className="material-icons" style={{ fontSize: '16px' }}>
                   arrow_forward
                 </span>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

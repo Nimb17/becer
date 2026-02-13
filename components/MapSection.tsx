@@ -1,41 +1,46 @@
 import React from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import EditableText from './EditableText';
+
+const projects = [
+  {
+    nameKey: 'map.projects.1.name',
+    nameFallback: 'MesaDigital',
+    cityKey: 'map.projects.1.city',
+    cityFallback: 'Vallenar',
+    image: '/mesa-digital.png',
+    top: '45%',
+    left: '40%',
+    color: 'var(--primary)',
+  },
+  {
+    nameKey: 'map.projects.2.name',
+    nameFallback: 'Farmacia Comunal',
+    cityKey: 'map.projects.2.city',
+    cityFallback: 'Copiapo',
+    image: '/farmacia-comunal.png',
+    top: '35%',
+    left: '45%',
+    color: '#EF4444',
+  },
+  {
+    nameKey: 'map.projects.3.name',
+    nameFallback: 'Gestion Gimnasios',
+    cityKey: 'map.projects.3.city',
+    cityFallback: 'Caldera',
+    image: '/gestion-gimnasios.png',
+    top: '32%',
+    left: '30%',
+    color: '#F59E0B',
+  },
+];
 
 const MapSection: React.FC = () => {
+  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;
+  const whatsappDiagnosticoHref = whatsappNumber
+    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola, quiero solicitar un diagnostico digital gratuito para mi negocio.')}`
+    : '#contacto';
   const ref = useScrollReveal();
-
-  const projects = [
-    {
-      name: 'MesaDigital',
-      city: 'Vallenar',
-      image: '/mesa-digital.png',
-      top: '45%',
-      left: '40%',
-      color: 'var(--primary)',
-    },
-    {
-      name: 'Farmacia Comunal',
-      city: 'Copiapó',
-      image: '/farmacia-comunal.png',
-      top: '35%',
-      left: '45%',
-      color: '#EF4444',
-    },
-    {
-      name: 'Gestión Gimnasios',
-      city: 'Caldera',
-      image: '/gestion-gimnasios.png',
-      top: '32%',
-      left: '30%',
-      color: '#F59E0B',
-    },
-  ];
-
-  const checkItems = [
-    'Lenguaje hiperlocal: "para tu minimarket en Vallenar" o "ferretería Copiapó".',
-    'Casos reales de la zona para aumentar identificación y tasa de contacto.',
-    'Estrategia simple, medible y pensada para pymes sin endeudarse.',
-  ];
 
   return (
     <section
@@ -48,7 +53,6 @@ const MapSection: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Map */}
           <div className="order-2 lg:order-1 animate-on-scroll">
             <div
               style={{
@@ -61,12 +65,12 @@ const MapSection: React.FC = () => {
                 boxShadow: 'var(--shadow-xl)',
               }}
             >
-              {/* Map background */}
               <div
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  backgroundImage: 'url(https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Chile_relief_location_map.jpg/612px-Chile_relief_location_map.jpg)',
+                  backgroundImage:
+                    'url(https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Chile_relief_location_map.jpg/612px-Chile_relief_location_map.jpg)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   filter: 'grayscale(1) contrast(1.1)',
@@ -81,30 +85,28 @@ const MapSection: React.FC = () => {
                 }}
               />
 
-              {/* Map Pins */}
-              {projects.map((p, i) => (
+              {projects.map((project, index) => (
                 <div
-                  key={p.name}
+                  key={project.nameKey}
                   style={{
                     position: 'absolute',
-                    top: p.top,
-                    left: p.left,
+                    top: project.top,
+                    left: project.left,
                     cursor: 'pointer',
                     zIndex: 10,
                     transition: 'transform 0.3s var(--ease-spring)',
                   }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'translateY(-6px)';
-                    const tooltip = e.currentTarget.querySelector('.map-tooltip') as HTMLElement;
+                  onMouseEnter={(event) => {
+                    (event.currentTarget as HTMLElement).style.transform = 'translateY(-6px)';
+                    const tooltip = event.currentTarget.querySelector('.map-tooltip') as HTMLElement;
                     if (tooltip) tooltip.style.opacity = '1';
                   }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-                    const tooltip = e.currentTarget.querySelector('.map-tooltip') as HTMLElement;
+                  onMouseLeave={(event) => {
+                    (event.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                    const tooltip = event.currentTarget.querySelector('.map-tooltip') as HTMLElement;
                     if (tooltip) tooltip.style.opacity = '0';
                   }}
                 >
-                  {/* Pulse ring */}
                   <div
                     style={{
                       position: 'absolute',
@@ -114,18 +116,17 @@ const MapSection: React.FC = () => {
                       width: '40px',
                       height: '40px',
                       borderRadius: '50%',
-                      border: `2px solid ${p.color}`,
-                      animation: `pulse-ring 2s ease-out infinite`,
-                      animationDelay: `${i * 600}ms`,
+                      border: `2px solid ${project.color}`,
+                      animation: 'pulse-ring 2s ease-out infinite',
+                      animationDelay: `${index * 600}ms`,
                     }}
                   />
                   <span
                     className="material-icons"
-                    style={{ color: p.color, fontSize: '36px', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.3))' }}
+                    style={{ color: project.color, fontSize: '36px', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.3))' }}
                   >
                     place
                   </span>
-                  {/* Tooltip */}
                   <div
                     className="map-tooltip"
                     style={{
@@ -146,14 +147,19 @@ const MapSection: React.FC = () => {
                       boxShadow: 'var(--shadow-lg)',
                     }}
                   >
-                    {p.name}
+                    <EditableText as="span" contentKey={project.nameKey} fallback={project.nameFallback} multiline={false} />
                     <br />
-                    <span style={{ fontWeight: 400, opacity: 0.8 }}>{p.city}</span>
+                    <EditableText
+                      as="span"
+                      contentKey={project.cityKey}
+                      fallback={project.cityFallback}
+                      multiline={false}
+                      style={{ fontWeight: 400, opacity: 0.8 }}
+                    />
                   </div>
                 </div>
               ))}
 
-              {/* Bottom card overlay */}
               <div
                 className="glass"
                 style={{
@@ -176,13 +182,20 @@ const MapSection: React.FC = () => {
                     gap: '8px',
                   }}
                 >
-                  <span className="material-icons" style={{ fontSize: 16, color: 'var(--accent)' }}>public</span>
-                  Casos locales verificados
+                  <span className="material-icons" style={{ fontSize: 16, color: 'var(--accent)' }}>
+                    public
+                  </span>
+                  <EditableText
+                    as="span"
+                    contentKey="map.overlay.title"
+                    fallback="Casos locales verificados"
+                    multiline={false}
+                  />
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-                  {projects.map((p) => (
+                  {projects.map((project) => (
                     <div
-                      key={p.name}
+                      key={`${project.nameKey}-card`}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -191,16 +204,16 @@ const MapSection: React.FC = () => {
                         borderRadius: 'var(--radius-sm)',
                         transition: 'background 0.2s',
                       }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.04)';
+                      onMouseEnter={(event) => {
+                        (event.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.04)';
                       }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = 'transparent';
+                      onMouseLeave={(event) => {
+                        (event.currentTarget as HTMLElement).style.background = 'transparent';
                       }}
                     >
                       <img
-                        src={p.image}
-                        alt={p.name}
+                        src={project.image}
+                        alt={project.nameFallback}
                         style={{
                           width: 36,
                           height: 36,
@@ -210,7 +223,11 @@ const MapSection: React.FC = () => {
                         }}
                       />
                       <div>
-                        <p
+                        <EditableText
+                          as="p"
+                          contentKey={project.nameKey}
+                          fallback={project.nameFallback}
+                          multiline={false}
                           style={{
                             fontSize: '0.75rem',
                             fontWeight: 700,
@@ -218,18 +235,18 @@ const MapSection: React.FC = () => {
                             margin: 0,
                             lineHeight: 1.3,
                           }}
-                        >
-                          {p.name}
-                        </p>
-                        <p
+                        />
+                        <EditableText
+                          as="p"
+                          contentKey={project.cityKey}
+                          fallback={project.cityFallback}
+                          multiline={false}
                           style={{
                             fontSize: '0.65rem',
                             color: 'var(--text-muted)',
                             margin: 0,
                           }}
-                        >
-                          {p.city}
-                        </p>
+                        />
                       </div>
                     </div>
                   ))}
@@ -238,10 +255,15 @@ const MapSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Content */}
           <div className="order-1 lg:order-2">
             <div className="animate-on-scroll">
-              <span className="section-badge">Cobertura Nacional</span>
+              <EditableText
+                as="span"
+                className="section-badge"
+                contentKey="map.header.badge"
+                fallback="Cobertura Nacional"
+                multiline={false}
+              />
             </div>
             <h2
               className="animate-on-scroll delay-100"
@@ -254,63 +276,35 @@ const MapSection: React.FC = () => {
                 marginBottom: '20px',
               }}
             >
-              Atención remota 100% en{' '}
-              <span className="gradient-text">todo Chile</span>
+              <EditableText
+                as="span"
+                contentKey="map.header.title.line1"
+                fallback="Atencion remota 100% en"
+                multiline={false}
+              />{' '}
+              <EditableText
+                as="span"
+                className="gradient-text"
+                contentKey="map.header.title.line2"
+                fallback="todo Chile"
+                multiline={false}
+              />
             </h2>
-            <p
+            <EditableText
+              as="p"
               className="animate-on-scroll delay-200"
+              contentKey="map.header.subtitle"
+              fallback="Trabajamos con pymes de comercio y servicios en cualquier region, sin barreras geograficas. Proceso completo online, con foco en resultados rapidos y medibles."
               style={{
                 fontSize: '1.05rem',
                 lineHeight: 1.8,
                 color: 'var(--text-secondary)',
                 marginBottom: '32px',
               }}
-            >
-              Trabajamos con pymes de comercio y servicios en cualquier región,
-              sin barreras geográficas. Proceso completo online, con foco en
-              resultados rápidos y medibles.
-            </p>
-
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, marginBottom: '36px' }}>
-              {checkItems.map((item, i) => (
-                <li
-                  key={i}
-                  className={`animate-on-scroll delay-${(i + 3) * 100}`}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '14px',
-                    marginBottom: '16px',
-                    padding: '14px 16px',
-                    borderRadius: 'var(--radius-md)',
-                    background: 'rgba(0,212,170,0.04)',
-                    border: '1px solid rgba(0,212,170,0.08)',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = 'rgba(0,212,170,0.08)';
-                    (e.currentTarget as HTMLElement).style.transform = 'translateX(4px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = 'rgba(0,212,170,0.04)';
-                    (e.currentTarget as HTMLElement).style.transform = 'translateX(0)';
-                  }}
-                >
-                  <span
-                    className="material-icons"
-                    style={{ color: 'var(--accent)', fontSize: '20px', marginTop: '2px', flexShrink: 0 }}
-                  >
-                    check_circle
-                  </span>
-                  <span style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            />
 
             <a
-              href="#contacto"
+              href={whatsappDiagnosticoHref}
               className="animate-on-scroll delay-600 btn-primary"
               style={{
                 textDecoration: 'none',
@@ -319,8 +313,15 @@ const MapSection: React.FC = () => {
                 gap: '8px',
               }}
             >
-              Solicitar diagnóstico gratuito
-              <span className="material-icons" style={{ fontSize: 18 }}>arrow_forward</span>
+              <EditableText
+                as="span"
+                contentKey="map.cta.diagnostico"
+                fallback="Solicitar diagnostico gratuito"
+                multiline={false}
+              />
+              <span className="material-icons" style={{ fontSize: 18 }}>
+                arrow_forward
+              </span>
             </a>
           </div>
         </div>

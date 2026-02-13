@@ -2,14 +2,36 @@ import React, { useEffect, useState } from 'react';
 import EditableText from './EditableText';
 
 const Navbar: React.FC = () => {
+  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined;
+  const whatsappHref = whatsappNumber
+    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola, quiero agendar una asesoría.')}`
+    : '#contacto';
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [logoClickCount, setLogoClickCount] = useState(0);
+
+  useEffect(() => {
+    if (logoClickCount === 0) return;
+
+    const timer = window.setTimeout(() => {
+      setLogoClickCount(0);
+    }, 700);
+
+    if (logoClickCount >= 3) {
+      window.dispatchEvent(new CustomEvent('editor:toggle-visibility'));
+      setLogoClickCount(0);
+      window.clearTimeout(timer);
+      return;
+    }
+
+    return () => window.clearTimeout(timer);
+  }, [logoClickCount]);
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 30);
-      const sections = ['problemas', 'soluciones', 'proyectos', 'precios', 'contacto'];
+      const sections = ['problemas', 'soluciones', 'proyectos', 'contacto'];
       for (const id of sections.reverse()) {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top <= 120) {
@@ -26,7 +48,6 @@ const Navbar: React.FC = () => {
     { href: '#problemas', label: 'Diagnostico' },
     { href: '#soluciones', label: 'Soluciones' },
     { href: '#proyectos', label: 'Proyectos' },
-    { href: '#precios', label: 'Servicios' },
   ];
 
   return (
@@ -43,7 +64,10 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setLogoClickCount((prev) => prev + 1);
+            }}
             className="flex items-center group py-2"
             style={{ background: 'none', border: 'none', cursor: 'pointer', paddingLeft: 0 }}
             aria-label="Volver al inicio"
@@ -94,7 +118,7 @@ const Navbar: React.FC = () => {
             <div className="w-px h-6 mx-3" style={{ background: 'var(--border)' }} />
 
             <a
-              href="#contacto"
+              href={whatsappHref}
               className="btn-primary"
               style={{
                 padding: '10px 24px',
@@ -171,7 +195,7 @@ const Navbar: React.FC = () => {
           ))}
           <div className="pt-3">
             <a
-              href="#contacto"
+              href={whatsappHref}
               onClick={() => setIsOpen(false)}
               className="btn-accent block w-full text-center"
               style={{ textDecoration: 'none', padding: '14px 24px', fontSize: '1rem' }}

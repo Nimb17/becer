@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import PainPoints from './components/PainPoints';
@@ -6,7 +6,6 @@ import Solutions from './components/Solutions';
 import MapSection from './components/MapSection';
 import Portfolio from './components/Portfolio';
 import Process from './components/Process';
-import Pricing from './components/Pricing';
 import SercotecBanner from './components/SercotecBanner';
 import Footer from './components/Footer';
 import { EditorProvider, useEditor } from './context/EditorContext';
@@ -71,6 +70,17 @@ function EditorPanel() {
 }
 
 export default function App() {
+  const [isEditorPanelVisible, setIsEditorPanelVisible] = useState(false);
+
+  useEffect(() => {
+    const handleToggleEditor = () => {
+      setIsEditorPanelVisible((prev) => !prev);
+    };
+
+    window.addEventListener('editor:toggle-visibility', handleToggleEditor);
+    return () => window.removeEventListener('editor:toggle-visibility', handleToggleEditor);
+  }, []);
+
   return (
     <EditorProvider>
       <div className="min-h-screen">
@@ -82,11 +92,10 @@ export default function App() {
           <MapSection />
           <Portfolio />
           <Process />
-          <Pricing />
-          <SercotecBanner />
+          {/* <SercotecBanner /> */}
         </main>
         <Footer />
-        <EditorPanel />
+        {isEditorPanelVisible && <EditorPanel />}
       </div>
     </EditorProvider>
   );
