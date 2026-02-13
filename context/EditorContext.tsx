@@ -6,6 +6,7 @@ type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
 type EditorContextValue = {
   content: ContentMap;
+  isContentLoaded: boolean;
   isAuthenticated: boolean;
   isEditing: boolean;
   saveState: SaveState;
@@ -29,6 +30,7 @@ function sanitizeClientText(value: string): string {
 export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [content, setContent] = useState<ContentMap>({});
   const [draft, setDraft] = useState<ContentMap>({});
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
   const [token, setToken] = useState<string>(() => localStorage.getItem(TOKEN_STORAGE_KEY) ?? '');
   const [isEditing, setIsEditing] = useState(false);
   const [saveState, setSaveState] = useState<SaveState>('idle');
@@ -42,6 +44,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
         const loaded = payload.content ?? {};
         setContent(loaded);
         setDraft(loaded);
+        setIsContentLoaded(true);
         return;
       }
 
@@ -52,8 +55,10 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       const loaded = (await staticResponse.json()) as ContentMap;
       setContent(loaded);
       setDraft(loaded);
+      setIsContentLoaded(true);
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Error al cargar contenido.');
+      setIsContentLoaded(true);
     }
   }, []);
 
@@ -146,6 +151,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<EditorContextValue>(
     () => ({
       content,
+      isContentLoaded,
       isAuthenticated: Boolean(token),
       isEditing,
       saveState,
@@ -157,7 +163,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       getText,
       saveContent,
     }),
-    [content, token, isEditing, saveState, errorMessage, login, logout, toggleEditing, updateText, getText, saveContent]
+    [content, isContentLoaded, token, isEditing, saveState, errorMessage, login, logout, toggleEditing, updateText, getText, saveContent]
   );
 
   return <EditorContext.Provider value={value}>{children}</EditorContext.Provider>;

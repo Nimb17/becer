@@ -20,7 +20,7 @@ export default function EditableText({
   className,
   style,
 }: EditableTextProps) {
-  const { getText, isEditing, updateText } = useEditor();
+  const { getText, isContentLoaded, isEditing, updateText } = useEditor();
   const resolvedText = getText(contentKey, fallback);
   const elementRef = useRef<HTMLElement | null>(null);
 
@@ -42,7 +42,10 @@ export default function EditableText({
     <Component
       ref={elementRef}
       className={className}
-      style={style}
+      style={{
+        ...style,
+        visibility: isContentLoaded ? 'visible' : 'hidden',
+      }}
       contentEditable={isEditing}
       suppressContentEditableWarning
       spellCheck={isEditing}
