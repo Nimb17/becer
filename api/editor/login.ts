@@ -1,8 +1,25 @@
-import { createSessionToken } from './_shared';
+import crypto from 'node:crypto';
 
 export const config = {
   runtime: 'nodejs',
 };
+
+const SESSION_TTL_SECONDS = 60 * 60 * 8;
+
+function toBase64Url(value: string): string {
+  return Buffer.from(value, 'utf-8').toString('base64url');
+}
+
+function signPayload(payload: string, secret: string): string {
+  return crypto.createHmac('sha256', secret).update(payload).digest('base64url');
+}
+
+function createSessionToken(secret: string): string {
+  const exp = Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS;
+  const payload = toBase64Url(JSON.stringify({ exp }));
+  const signature = signPayload(payload, secret);
+  return `${payload}.${signature}`;
+}
 
 function parseBody(req: any) {
   if (!req.body) return {};

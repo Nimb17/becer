@@ -1,7 +1,6 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { list, put } from '@vercel/blob';
 
 export type ContentMap = Record<string, string>;
 
@@ -83,19 +82,25 @@ export function jsonResponse(payload: unknown, status = 200): Response {
 }
 
 async function readFromBlob(token: string): Promise<ContentMap | null> {
-  const result = await list({ token, prefix: BLOB_PATHNAME, limit: 1 });
-  const blob = result.blobs[0];
-  if (!blob) {
+  try {
+    const { list } = await import('@vercel/blob');
+    const result = await list({ token, prefix: BLOB_PATHNAME, limit: 1 });
+    const blob = result.blobs[0];
+    if (!blob) {
+      return null;
+    }
+    const response = await fetch(blob.url);
+    if (!response.ok) {
+      return null;
+    }
+    return (await response.json()) as ContentMap;
+  } catch {
     return null;
   }
-  const response = await fetch(blob.url);
-  if (!response.ok) {
-    return null;
-  }
-  return (await response.json()) as ContentMap;
 }
 
 async function writeToBlob(token: string, content: ContentMap): Promise<void> {
+  const { put } = await import('@vercel/blob');
   await put(BLOB_PATHNAME, JSON.stringify(content, null, 2), {
     token,
     access: 'public',
