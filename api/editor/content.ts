@@ -3,7 +3,7 @@ import {
   loadContent,
   normalizeContent,
   persistContent,
-} from './_shared';
+} from './_shared.js';
 
 export const config = {
   runtime: 'nodejs',
