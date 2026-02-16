@@ -5,8 +5,9 @@ import path from 'node:path';
 export type ContentMap = Record<string, string>;
 
 const SESSION_TTL_SECONDS = 60 * 60 * 8;
-const BLOB_PATHNAME = 'editor/siteContent.json';
-const LOCAL_CONTENT_PATH = path.resolve(process.cwd(), 'public/content/siteContent.json');
+export const BLOB_PATHNAME = 'editor/siteContent.json';
+export const LOCAL_CONTENT_PATH = path.resolve(process.cwd(), 'public/content/siteContent.json');
+const ALLOW_LOCAL_FALLBACK = process.env.ALLOW_LOCAL_CONTENT_FALLBACK === 'true';
 
 function toBase64Url(value: string): string {
   return Buffer.from(value, 'utf-8').toString('base64url');
@@ -132,7 +133,10 @@ export async function loadContent(): Promise<ContentMap> {
       return blobContent;
     }
   }
-  return await readFromLocalFile();
+  if (ALLOW_LOCAL_FALLBACK) {
+    return await readFromLocalFile();
+  }
+  throw new Error('BLOB_READ_WRITE_TOKEN no configurado y ALLOW_LOCAL_CONTENT_FALLBACK no habilitado.');
 }
 
 export async function persistContent(content: ContentMap): Promise<void> {
@@ -141,5 +145,9 @@ export async function persistContent(content: ContentMap): Promise<void> {
     await writeToBlob(blobToken, content);
     return;
   }
-  await writeToLocalFile(content);
+  if (ALLOW_LOCAL_FALLBACK) {
+    await writeToLocalFile(content);
+    return;
+  }
+  throw new Error('No se puede persistir sin BLOB_READ_WRITE_TOKEN. Usa Blob como fuente de verdad.');
 }

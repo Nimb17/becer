@@ -455,7 +455,7 @@ body {
   position: fixed;
   right: 16px;
   bottom: 16px;
-  z-index: 1000;
+  z-index: 2000;
   width: min(360px, calc(100vw - 24px));
   background: rgba(15, 23, 42, 0.9);
   color: #f8fafc;

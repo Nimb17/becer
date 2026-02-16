@@ -9,6 +9,7 @@ const sessionStore = new Map<string, number>();
 const SESSION_TTL_MS = 1000 * 60 * 60 * 8;
 
 type ContentMap = Record<string, string>;
+const BLOB_PATHNAME = 'editor/siteContent.json';
 
 function sendJson(response: ServerResponse, statusCode: number, payload: unknown) {
   response.statusCode = statusCode;
@@ -66,7 +67,36 @@ function isTokenValid(token: string): boolean {
   return true;
 }
 
-function editorApiPlugin(editorPassword?: string): Plugin {
+async function readFromBlob(blobToken: string): Promise<ContentMap | null> {
+  try {
+    const { list } = await import('@vercel/blob');
+    const result = await list({ token: blobToken, prefix: BLOB_PATHNAME, limit: 1 });
+    const blob = result.blobs[0];
+    if (!blob) {
+      return null;
+    }
+    const response = await fetch(blob.url);
+    if (!response.ok) {
+      return null;
+    }
+    return (await response.json()) as ContentMap;
+  } catch {
+    return null;
+  }
+}
+
+async function writeToBlob(blobToken: string, content: ContentMap): Promise<void> {
+  const { put } = await import('@vercel/blob');
+  await put(BLOB_PATHNAME, JSON.stringify(content, null, 2), {
+    token: blobToken,
+    access: 'public',
+    addRandomSuffix: false,
+    contentType: 'application/json',
+    allowOverwrite: true,
+  });
+}
+
+function editorApiPlugin(editorPassword?: string, blobToken?: string, allowLocalFallback = false): Plugin {
   const contentFilePath = path.resolve(__dirname, 'public/content/siteContent.json');
 
   return {
@@ -82,9 +112,20 @@ function editorApiPlugin(editorPassword?: string): Plugin {
 
         if (request.method === 'GET' && requestUrl.pathname === '/api/editor/content') {
           try {
-            const fileContent = await fs.readFile(contentFilePath, 'utf-8');
-            const parsed = JSON.parse(fileContent) as ContentMap;
-            sendJson(response, 200, { content: parsed });
+            if (blobToken) {
+              const blobContent = await readFromBlob(blobToken);
+              if (blobContent) {
+                sendJson(response, 200, { content: blobContent });
+                return;
+              }
+            }
+            if (allowLocalFallback) {
+              const fileContent = await fs.readFile(contentFilePath, 'utf-8');
+              const parsed = JSON.parse(fileContent) as ContentMap;
+              sendJson(response, 200, { content: parsed });
+              return;
+            }
+            sendJson(response, 503, { error: 'BLOB_READ_WRITE_TOKEN no configurado en desarrollo.' });
             return;
           } catch {
             sendJson(response, 200, { content: {} });
@@ -122,9 +163,18 @@ function editorApiPlugin(editorPassword?: string): Plugin {
           const safeContent = normalizeContent(body.content);
 
           try {
-            await fs.mkdir(path.dirname(contentFilePath), { recursive: true });
-            await fs.writeFile(contentFilePath, `${JSON.stringify(safeContent, null, 2)}\n`, 'utf-8');
-            sendJson(response, 200, { content: safeContent });
+            if (blobToken) {
+              await writeToBlob(blobToken, safeContent);
+              sendJson(response, 200, { content: safeContent });
+              return;
+            }
+            if (allowLocalFallback) {
+              await fs.mkdir(path.dirname(contentFilePath), { recursive: true });
+              await fs.writeFile(contentFilePath, `${JSON.stringify(safeContent, null, 2)}\n`, 'utf-8');
+              sendJson(response, 200, { content: safeContent });
+              return;
+            }
+            sendJson(response, 503, { error: 'No se puede guardar sin BLOB_READ_WRITE_TOKEN en desarrollo.' });
             return;
           } catch {
             sendJson(response, 500, { error: 'No se pudo guardar el contenido en disco.' });
@@ -140,13 +190,14 @@ function editorApiPlugin(editorPassword?: string): Plugin {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
+  const allowLocalFallback = env.ALLOW_LOCAL_CONTENT_FALLBACK === 'true';
 
   return {
     server: {
       port: 3000,
       host: '0.0.0.0',
     },
-    plugins: [react(), editorApiPlugin(env.EDITOR_PASSWORD)],
+    plugins: [react(), editorApiPlugin(env.EDITOR_PASSWORD, env.BLOB_READ_WRITE_TOKEN, allowLocalFallback)],
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),

@@ -55,3 +55,21 @@ Variables requeridas en Vercel:
 Despues de editar `package.json`, ejecuta:
 
 `npm install`
+
+## Flujo seguro (Blob como fuente de verdad)
+
+Para evitar perder contenido de produccion:
+
+1. Antes de comenzar cambios en desarrollo, sincroniza contenido:
+   `npm run content:pull`
+2. Trabaja en UI/codigo y prueba con `npm run dev`.
+3. Mantén estables las claves (`contentKey`) ya existentes. Evita renombrarlas.
+4. Si agregas nuevas secciones editables, agrega nuevas keys en `public/content/siteContent.json`.
+5. Si cambias contenido base local y quieres publicarlo directo en Blob:
+   `npm run content:push`
+
+Buenas practicas:
+
+- Blob es la fuente de verdad para contenido editable.
+- No deployes cambios estructurales sin antes ejecutar `npm run content:pull`.
+- Usa `ALLOW_LOCAL_CONTENT_FALLBACK=true` solo para desarrollo aislado sin Blob.
