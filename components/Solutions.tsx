@@ -5,56 +5,56 @@ import ServiceModal from './ServiceModal';
 
 const solutions = [
   {
-    icon: 'place',
-    titleKey: 'solutions.card1.title',
-    titleFallback: 'Google Maps y Posicionamiento Local',
-    priceKey: 'solutions.card1.price',
-    priceFallback: '$110.000',
-    descriptionKey: 'solutions.card1.description',
-    descriptionFallback: 'Aparece primero cuando busquen tu rubro en tu ciudad.',
-    modalSubtitleKey: 'solutions.card1.modal.subtitle',
-    modalSubtitleFallback: 'Servicio ideal para mejorar visibilidad local desde la primera semana.',
-    modalContentKey: 'solutions.card1.modal.content',
-    modalContentFallback:
-      'Optimizamos tu ficha de Google Business Profile, categorias, servicios, publicaciones y resenas para captar consultas de alto intento en tu zona.',
-    gradient: 'linear-gradient(135deg, #00D4AA, #00B894)',
-  },
-  {
-    icon: 'table_chart',
-    titleKey: 'solutions.card2.title',
-    titleFallback: 'Sistema de Gestion Automatizado',
-    priceKey: 'solutions.card2.price',
-    priceFallback: 'Desde $160.000',
-    descriptionKey: 'solutions.card2.description',
-    descriptionFallback:
-      'Excel o Google Sheets con reportes instantaneos, menos errores y control real de stock y ventas, hecho a tu medida.',
-    modalSubtitleKey: 'solutions.card2.modal.subtitle',
-    modalSubtitleFallback: 'Control operativo claro, sin software complejo.',
-    modalContentKey: 'solutions.card2.modal.content',
-    modalContentFallback:
-      'Creamos un sistema automatizado a medida para tu operacion: ventas, stock, costos, alertas y paneles de seguimiento para decisiones rapidas.',
-    gradient: 'linear-gradient(135deg, #6C5CE7, #a29bfe)',
-  },
-  {
     icon: 'language',
-    titleKey: 'solutions.card3.title',
+    titleKey: 'solutions.card1.title',
     titleFallback: 'Web Rapida',
-    priceKey: 'solutions.card3.price',
+    priceKey: 'solutions.card1.price',
     priceFallback: 'Desde $200.000',
-    descriptionKey: 'solutions.card3.description',
+    descriptionKey: 'solutions.card1.description',
     descriptionFallback:
       'Sitio profesional, responsive y optimizado para que cargue al instante y venda tu producto o servicio 24/7.',
-    modalSubtitleKey: 'solutions.card3.modal.subtitle',
+    modalSubtitleKey: 'solutions.card1.modal.subtitle',
     modalSubtitleFallback: 'Tu vitrina digital para convertir visitas en consultas.',
-    modalContentKey: 'solutions.card3.modal.content',
+    modalContentKey: 'solutions.card1.modal.content',
     modalContentFallback:
       'Disenamos una web enfocada en conversion con arquitectura clara, velocidad de carga, SEO tecnico base y llamados a la accion conectados a WhatsApp.',
     gradient: 'linear-gradient(135deg, #0F2D3A, #1a4a5e)',
   },
   {
+    icon: 'storefront',
+    titleKey: 'solutions.card2.title',
+    titleFallback: 'Google Mi Negocio',
+    priceKey: 'solutions.card2.price',
+    priceFallback: 'Desde $110.000',
+    descriptionKey: 'solutions.card2.description',
+    descriptionFallback: 'Optimizamos tu ficha para aparecer y convertir mejor en busquedas locales.',
+    modalSubtitleKey: 'solutions.card2.modal.subtitle',
+    modalSubtitleFallback: 'Visibilidad local real para atraer clientes cercanos.',
+    modalContentKey: 'solutions.card2.modal.content',
+    modalContentFallback:
+      'Optimizamos Google Mi Negocio: categorias, servicios, publicaciones, fotos y gestion de resenas para aumentar confianza y contactos.',
+    gradient: 'linear-gradient(135deg, #00D4AA, #00B894)',
+  },
+  {
+    icon: 'table_chart',
+    titleKey: 'solutions.card3.title',
+    titleFallback: 'Sistema de Automatizacion con Excel',
+    priceKey: 'solutions.card3.price',
+    priceFallback: 'Desde $160.000',
+    descriptionKey: 'solutions.card3.description',
+    descriptionFallback:
+      'Automatizamos tu operacion con Excel o Google Sheets y reportes instantaneos.',
+    modalSubtitleKey: 'solutions.card3.modal.subtitle',
+    modalSubtitleFallback: 'Control operativo claro, sin software complejo.',
+    modalContentKey: 'solutions.card3.modal.content',
+    modalContentFallback:
+      'Creamos un sistema automatizado a medida para ventas, stock, costos, alertas y paneles de seguimiento para decisiones rapidas.',
+    gradient: 'linear-gradient(135deg, #6C5CE7, #a29bfe)',
+  },
+  {
     icon: 'phone_iphone',
     titleKey: 'solutions.card4.title',
-    titleFallback: 'App Movil Personalizada',
+    titleFallback: 'Aplicaciones Moviles',
     priceKey: 'solutions.card4.price',
     priceFallback: 'Desde $800.000',
     descriptionKey: 'solutions.card4.description',
@@ -69,7 +69,7 @@ const solutions = [
   {
     icon: 'settings_suggest',
     titleKey: 'solutions.card5.title',
-    titleFallback: 'Software de Gestion Integral',
+    titleFallback: 'Sistema de Software',
     priceKey: 'solutions.card5.price',
     priceFallback: 'A cotizar',
     descriptionKey: 'solutions.card5.description',
@@ -80,37 +80,6 @@ const solutions = [
     modalContentFallback:
       'Partimos con prototipo visual para validar flujos y alcance. Luego construimos software a medida con etapas claras y control de entregables.',
     gradient: 'linear-gradient(135deg, #334155, #475569)',
-  },
-  {
-    icon: 'trending_up',
-    titleKey: 'solutions.card6.title',
-    titleFallback: 'SEO Local',
-    priceKey: 'solutions.card6.price',
-    priceFallback: 'Mensual desde $120.000',
-    descriptionKey: 'solutions.card6.description',
-    descriptionFallback: 'Mantencion de SEO local para sostener posicionamiento y consultas calificadas.',
-    modalSubtitleKey: 'solutions.card6.modal.subtitle',
-    modalSubtitleFallback: 'Posicionamiento sostenido para no desaparecer del mapa.',
-    modalContentKey: 'solutions.card6.modal.content',
-    modalContentFallback:
-      'Monitoreamos ranking local, optimizamos contenidos y reforzamos relevancia geografica para mantener flujo estable de clientes potenciales.',
-    gradient: 'linear-gradient(135deg, #0EA5E9, #22D3EE)',
-  },
-  {
-    icon: 'campaign',
-    titleKey: 'solutions.card7.title',
-    titleFallback: 'Ads Efectivos y Google Mi Negocio',
-    priceKey: 'solutions.card7.price',
-    priceFallback: 'Mensual desde $180.000',
-    descriptionKey: 'solutions.card7.description',
-    descriptionFallback:
-      'Campanas orientadas a conversion y gestion de Google Mi Negocio (ficha, posts y resenas).',
-    modalSubtitleKey: 'solutions.card7.modal.subtitle',
-    modalSubtitleFallback: 'Publicidad y presencia local trabajando en conjunto.',
-    modalContentKey: 'solutions.card7.modal.content',
-    modalContentFallback:
-      'Ejecutamos campanas con foco en conversion y gestion continua de Google Mi Negocio para elevar alcance, confianza y tasa de contacto.',
-    gradient: 'linear-gradient(135deg, #EC4899, #F43F5E)',
   },
 ];
 
