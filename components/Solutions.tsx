@@ -81,6 +81,22 @@ const solutions = [
       'Partimos con prototipo visual para validar flujos y alcance. Luego construimos software a medida con etapas claras y control de entregables.',
     gradient: 'linear-gradient(135deg, #334155, #475569)',
   },
+  {
+    icon: 'query_stats',
+    titleKey: 'solutions.card6.title',
+    titleFallback: 'Sistemas de Automatizacion en Excel',
+    priceKey: 'solutions.card6.price',
+    priceFallback: 'Desde $180.000',
+    descriptionKey: 'solutions.card6.description',
+    descriptionFallback:
+      'Creamos tableros y flujos automatizados para controlar ventas, gastos, stock y reportes en tiempo real.',
+    modalSubtitleKey: 'solutions.card6.modal.subtitle',
+    modalSubtitleFallback: 'Tu operacion ordenada con datos listos para decidir.',
+    modalContentKey: 'solutions.card6.modal.content',
+    modalContentFallback:
+      'Disenamos sistemas en Excel a medida con formulas, validaciones, alertas y paneles de control para reducir errores manuales y ahorrar horas de gestion.',
+    gradient: 'linear-gradient(135deg, #10B981, #34D399)',
+  },
 ];
 
 const Solutions: React.FC = () => {
