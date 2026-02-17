@@ -18,6 +18,9 @@ const solutions = [
     modalContentKey: 'solutions.card1.modal.content',
     modalContentFallback:
       'Disenamos una web enfocada en conversion con arquitectura clara, velocidad de carga, SEO tecnico base y llamados a la accion conectados a WhatsApp.',
+    modalHighlightsKey: 'solutions.card1.modal.highlights',
+    modalHighlightsFallback:
+      'Arquitectura clara orientada a conversion\nCarga rapida y experiencia responsive\nSEO tecnico base y CTA a WhatsApp',
     gradient: 'linear-gradient(135deg, #0F2D3A, #1a4a5e)',
   },
   {
@@ -33,6 +36,9 @@ const solutions = [
     modalContentKey: 'solutions.card2.modal.content',
     modalContentFallback:
       'Optimizamos Google Mi Negocio: categorias, servicios, publicaciones, fotos y gestion de resenas para aumentar confianza y contactos.',
+    modalHighlightsKey: 'solutions.card2.modal.highlights',
+    modalHighlightsFallback:
+      'Optimizacion de categorias y servicios\nPublicaciones y fotos de alto impacto\nGestion de resenas para mejorar conversion',
     gradient: 'linear-gradient(135deg, #00D4AA, #00B894)',
   },
   {
@@ -49,6 +55,9 @@ const solutions = [
     modalContentKey: 'solutions.card3.modal.content',
     modalContentFallback:
       'Creamos un sistema automatizado a medida para ventas, stock, costos, alertas y paneles de seguimiento para decisiones rapidas.',
+    modalHighlightsKey: 'solutions.card3.modal.highlights',
+    modalHighlightsFallback:
+      'Automatizacion de ventas, stock y costos\nAlertas para evitar quiebres o errores\nPaneles para decisiones rapidas',
     gradient: 'linear-gradient(135deg, #6C5CE7, #a29bfe)',
   },
   {
@@ -64,6 +73,9 @@ const solutions = [
     modalContentKey: 'solutions.card4.modal.content',
     modalContentFallback:
       'Desarrollamos una app movil pensada para tus clientes: catalogo, pedidos simples y experiencia de compra rapida para aumentar recurrencia.',
+    modalHighlightsKey: 'solutions.card4.modal.highlights',
+    modalHighlightsFallback:
+      'Catalogo digital simple y atractivo\nPedidos en pocos pasos\nCanal directo para fidelizar clientes',
     gradient: 'linear-gradient(135deg, #F97316, #FBBF24)',
   },
   {
@@ -79,6 +91,9 @@ const solutions = [
     modalContentKey: 'solutions.card5.modal.content',
     modalContentFallback:
       'Partimos con prototipo visual para validar flujos y alcance. Luego construimos software a medida con etapas claras y control de entregables.',
+    modalHighlightsKey: 'solutions.card5.modal.highlights',
+    modalHighlightsFallback:
+      'Prototipo para validar antes de construir\nDesarrollo por etapas con hitos claros\nControl de alcance y entregables',
     gradient: 'linear-gradient(135deg, #334155, #475569)',
   },
   {
@@ -95,6 +110,9 @@ const solutions = [
     modalContentKey: 'solutions.card6.modal.content',
     modalContentFallback:
       'Disenamos sistemas en Excel a medida con formulas, validaciones, alertas y paneles de control para reducir errores manuales y ahorrar horas de gestion.',
+    modalHighlightsKey: 'solutions.card6.modal.highlights',
+    modalHighlightsFallback:
+      'Formulas y validaciones a medida\nAlertas para control operativo\nPaneles de control para seguimiento diario',
     gradient: 'linear-gradient(135deg, #10B981, #34D399)',
   },
 ];
@@ -304,7 +322,12 @@ const Solutions: React.FC = () => {
                   color: 'var(--accent)',
                 }}
               >
-                Ver mas detalles
+                <EditableText
+                  as="span"
+                  contentKey="solutions.card.cta"
+                  fallback="Ver mas detalles"
+                  multiline={false}
+                />
                 <span className="material-icons" style={{ fontSize: '16px' }}>
                   arrow_forward
                 </span>
@@ -323,9 +346,13 @@ const Solutions: React.FC = () => {
           subtitleFallback={activeCard.modalSubtitleFallback}
           contentKey={activeCard.modalContentKey}
           contentFallback={activeCard.modalContentFallback}
+          highlightsKey={activeCard.modalHighlightsKey}
+          highlightsFallback={activeCard.modalHighlightsFallback}
           priceKey={activeCard.priceKey}
           priceFallback={activeCard.priceFallback}
           whatsappHref={modalWhatsappHref}
+          icon={activeCard.icon}
+          gradient={activeCard.gradient}
         />
       )}
     </section>
@@ -333,3 +360,4 @@ const Solutions: React.FC = () => {
 };
 
 export default Solutions;
+
