@@ -9,6 +9,8 @@ const projects = [
     cityKey: 'map.projects.1.city',
     cityFallback: 'Vallenar',
     image: '/mesa-digital.png',
+    imageAlt: 'MesaDigital - Carta Digital y Software para Restaurantes en Vallenar',
+    imageTitle: 'MesaDigital implementado en Vallenar',
     top: '45%',
     left: '40%',
     color: 'var(--primary)',
@@ -19,6 +21,8 @@ const projects = [
     cityKey: 'map.projects.2.city',
     cityFallback: 'Copiapo',
     image: '/farmacia-comunal.png',
+    imageAlt: 'Sistema de Gestión de Farmacia Comunal en Copiapó y Vallenar',
+    imageTitle: 'Software Farmacia Comunal desarrollado para la región',
     top: '35%',
     left: '45%',
     color: '#EF4444',
@@ -29,6 +33,8 @@ const projects = [
     cityKey: 'map.projects.3.city',
     cityFallback: 'Caldera',
     image: '/gestion-gimnasios.png',
+    imageAlt: 'Software de Gestión de Gimnasios para clientes en Caldera y Vallenar',
+    imageTitle: 'Sistema web para Gimnasios en Atacama',
     top: '32%',
     left: '30%',
     color: '#F59E0B',
@@ -213,7 +219,9 @@ const MapSection: React.FC = () => {
                     >
                       <img
                         src={project.image}
-                        alt={project.nameFallback}
+                        alt={project.imageAlt}
+                        title={project.imageTitle}
+                        loading="lazy"
                         style={{
                           width: 36,
                           height: 36,

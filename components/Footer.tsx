@@ -138,7 +138,12 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
           <div className="animate-on-scroll">
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
-              <img src="/logo-blanco.png" alt="Logo Asesorias Becer" style={{ height: '56px', width: 'auto', objectFit: 'contain' }} />
+              <img
+                src="/logo-blanco.png"
+                alt="Agencia de Marketing Digital y Desarrollo Web Asesorías Becer en Vallenar"
+                title="Diseño Web y Software en Vallenar - Asesorías Becer"
+                style={{ height: '56px', width: 'auto', objectFit: 'contain' }}
+              />
             </div>
 
             <EditableText

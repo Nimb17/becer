@@ -5,6 +5,8 @@ import EditableText from './EditableText';
 const projects = [
   {
     image: '/mesa-digital.png',
+    imageAlt: 'Desarrollo de Software y Carta Digital para Restaurantes en Vallenar - MesaDigital',
+    imageTitle: 'Caso de éxito: Software para Restaurantes en Vallenar',
     titleKey: 'portfolio.card1.title',
     titleFallback: 'MesaDigital',
     locationKey: 'portfolio.card1.location',
@@ -19,6 +21,8 @@ const projects = [
   },
   {
     image: '/farmacia-comunal.png',
+    imageAlt: 'Sistema de Gestión Integral para Farmacia Comunal en Copiapó y Vallenar',
+    imageTitle: 'Caso de éxito: Software para Farmacias en Atacama',
     titleKey: 'portfolio.card2.title',
     titleFallback: 'Farmacia Comunal',
     locationKey: 'portfolio.card2.location',
@@ -33,6 +37,8 @@ const projects = [
   },
   {
     image: '/gestion-gimnasios.png',
+    imageAlt: 'Software de Gestión de Clientes para Gimnasios en Vallenar y Atacama',
+    imageTitle: 'Caso de éxito: Sistema web para Gimnasios en Vallenar',
     titleKey: 'portfolio.card3.title',
     titleFallback: 'Gestion Gimnasios',
     locationKey: 'portfolio.card3.location',
@@ -133,7 +139,9 @@ const Portfolio: React.FC = () => {
               <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
                 <img
                   src={project.image}
-                  alt={project.titleFallback}
+                  alt={project.imageAlt}
+                  title={project.imageTitle}
+                  loading={index === 0 ? "eager" : "lazy"}
                   className="project-img"
                   style={{
                     width: '100%',

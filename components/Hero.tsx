@@ -174,7 +174,7 @@ const Hero: React.FC = () => {
             transitionDelay: '1200ms',
           }}
         >
-         
+
         </div>
 
         <div
@@ -200,7 +200,9 @@ const Hero: React.FC = () => {
               <img
                 key={index}
                 src={src}
-                alt={`Cliente ${index + 1}`}
+                alt={`Cliente satisfecho de Diseño Web y Software en Vallenar - Asesorías Becer ${index + 1}`}
+                title={`Emprendedor de Vallenar con presencia digital - Caso ${index + 1}`}
+                loading="lazy"
                 style={{
                   width: 36,
                   height: 36,

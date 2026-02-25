@@ -74,7 +74,8 @@ const Navbar: React.FC = () => {
           >
             <img
               src="/logo-color.png"
-              alt="Logo Asesorias Becer"
+              alt="Asesorías Becer Vallenar - Agencia de Desarrollo Web y Marketing Digital"
+              title="Asesorías Becer Vallenar - Tu socio digital"
               className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </button>
